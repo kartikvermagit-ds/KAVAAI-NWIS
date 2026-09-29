@@ -1,0 +1,69 @@
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #060d17;
+  color: #e2e8f0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbars for industrial telemetry feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #091322;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e3a5f;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Leaflet dark theme customizations */
+.leaflet-container {
+  background: #07111e !important;
+  font-family: inherit;
+}
+.leaflet-popup-content-wrapper {
+  background: #0f1c2e !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #1e3a5f;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7) !important;
+}
+.leaflet-popup-tip {
+  background: #0f1c2e !important;
+}
+.leaflet-bar a {
+  background-color: #0f1c2e !important;
+  color: #cbd5e1 !important;
+  border-bottom: 1px solid #1e3a5f !important;
+}
+.leaflet-bar a:hover {
+  background-color: #1e3a5f !important;
+  color: #ffffff !important;
+}
+
+/* Engineering badge pulse */
+@keyframes soft-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+.animate-soft-pulse {
+  animation: soft-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
