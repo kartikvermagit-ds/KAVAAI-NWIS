@@ -13,10 +13,13 @@ export const Topbar: React.FC<TopbarProps> = ({ activeWell, alertCount, onNaviga
     <header className="h-16 bg-[#071322] border-b border-[#1b2d48] px-6 flex items-center justify-between z-30 sticky top-0 shadow-md">
       {/* Brand & Context */}
       <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-900/30">
-            K
-          </div>
+        <div className="flex items-center space-x-3">
+          <img
+            src="/logo.png"
+            alt="KAVAAI-NWIS Logo"
+            className="h-10 w-auto object-contain rounded cursor-pointer transition-transform hover:scale-105"
+            onClick={() => onNavigate('overview')}
+          />
           <div>
             <div className="flex items-center space-x-2">
               <span className="font-mono font-bold tracking-wider text-white text-base">KAVAAI-NWIS</span>

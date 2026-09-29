@@ -27,9 +27,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onSelectView, ale
   return (
     <aside className="w-64 bg-[#050e1a] border-r border-[#15253b] flex flex-col flex-shrink-0 select-none">
       {/* Module Title */}
-      <div className="p-4 border-b border-[#15253b]">
-        <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Navigation Center</div>
-        <div className="text-xs text-slate-300 font-semibold mt-0.5">Brahma Basin Sector 4</div>
+      <div className="p-3.5 border-b border-[#15253b] space-y-1.5">
+        <div className="flex items-center space-x-2">
+          <img
+            src="/logo.png"
+            alt="KAVAAI-NWIS"
+            className="h-6 w-auto object-contain rounded"
+          />
+          <span className="text-[11px] font-mono uppercase tracking-wider text-blue-400 font-bold">KAVAAI-NWIS</span>
+        </div>
+        <div className="text-[10px] text-slate-400 font-mono">Exploration Block-4 • Rig Horizon-04</div>
       </div>
 
       {/* Nav List */}

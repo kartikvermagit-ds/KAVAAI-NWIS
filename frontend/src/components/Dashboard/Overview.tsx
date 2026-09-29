@@ -94,18 +94,25 @@ export const Overview: React.FC<OverviewProps> = ({ summary, loading, onNavigate
     <div className="flex-1 p-6 space-y-6 overflow-y-auto max-w-[1600px] mx-auto">
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#182944] gap-4">
-        <div>
-          <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold tracking-tight text-white font-mono">
-              KAVAAI-NWIS
-            </h1>
-            <span className="text-xs bg-blue-900/60 text-blue-300 font-mono px-2 py-0.5 rounded border border-blue-700/50">
-              SIH 2026 • SIH26121 • Smart Automation
-            </span>
+        <div className="flex items-center space-x-3.5">
+          <img
+            src="/logo.png"
+            alt="KAVAAI-NWIS Logo"
+            className="h-12 w-auto object-contain rounded-md shadow-md"
+          />
+          <div>
+            <div className="flex items-center space-x-2">
+              <h1 className="text-2xl font-bold tracking-tight text-white font-mono">
+                KAVAAI-NWIS
+              </h1>
+              <span className="text-xs bg-blue-900/60 text-blue-300 font-mono px-2 py-0.5 rounded border border-blue-700/50">
+                SIH 2026 • SIH26121 • Smart Automation
+              </span>
+            </div>
+            <p className="text-sm text-slate-400 mt-1">
+              Nearby Wells Intelligence System — AI-Powered Drilling Knowledge & Decision Support
+            </p>
           </div>
-          <p className="text-sm text-slate-400 mt-1">
-            Nearby Wells Intelligence System — AI-Powered Drilling Knowledge & Decision Support
-          </p>
         </div>
 
         <div className="flex items-center space-x-2">
