@@ -1,0 +1,56 @@
+[
+  {
+    "id": "FMT-01",
+    "name": "Dihing / Alluvium Formation",
+    "top_depth": 0.0,
+    "bottom_depth": 850.0,
+    "lithology": "Unconsolidated sands, gravels, clay beds",
+    "description": "Surface and shallow unconsolidated fluvial sediments. Prone to boulder washouts and surface hole enlargement.",
+    "typical_hazards": "Washout, bit balling, top-hole water flow"
+  },
+  {
+    "id": "FMT-02",
+    "name": "Tipam Sandstone Formation",
+    "top_depth": 850.0,
+    "bottom_depth": 2100.0,
+    "lithology": "Medium to coarse grained sandstone with intercalated clays",
+    "description": "Massive porous water-bearing sandstone sequence with high permeability streaks and occasional coal stringers.",
+    "typical_hazards": "Differential sticking, seepage mud losses, tight hole on trips"
+  },
+  {
+    "id": "FMT-03",
+    "name": "Bokabil Formation",
+    "top_depth": 2100.0,
+    "bottom_depth": 2950.0,
+    "lithology": "Silty shales, laminated sandstones, carbonaceous shales",
+    "description": "Interbedded shale-sandstone transition zone exhibiting abnormal pore pressure ramp in basal sections.",
+    "typical_hazards": "Shale swelling, sloughing, gas kicks, pack-offs"
+  },
+  {
+    "id": "FMT-04",
+    "name": "Barail Sandstone / XYZ Formation",
+    "top_depth": 2950.0,
+    "bottom_depth": 3650.0,
+    "lithology": "Hard quartzitic sandstones, fractured sand reservoirs, coal seams",
+    "description": "Primary hydrocarbon target interval featuring natural fracture networks, micro-faulted zones, and depleted pressure sub-units.",
+    "typical_hazards": "Severe to total lost circulation (mud loss), sudden torque surges, differential sticking, gas influx"
+  },
+  {
+    "id": "FMT-05",
+    "name": "Kopili Shale Formation",
+    "top_depth": 3650.0,
+    "bottom_depth": 3950.0,
+    "lithology": "Dark grey fissile splinty shales with calcareous bands",
+    "description": "Heavily stressed tectonized marine shale sequence with high chemical reactivity and narrow mud weight window.",
+    "typical_hazards": "Severe borehole breakout, wellbore collapse, stuck pipe, reaming delays"
+  },
+  {
+    "id": "FMT-06",
+    "name": "Jaintia Limestone / ABC Formation",
+    "top_depth": 3950.0,
+    "bottom_depth": 4500.0,
+    "lithology": "Dense fossiliferous limestone, dolomite, vuggy carbonate",
+    "description": "Deep carbonate platform deposit with karstic dissolution vugs and high reservoir temperatures.",
+    "typical_hazards": "Catastrophic cavernous losses, high H2S potential, extreme vibration / MWD failure"
+  }
+]

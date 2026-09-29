@@ -102,41 +102,49 @@ async def query_copilot(query: str, well_id: str = "WELL-A-01", depth_tolerance_
     # Check if specific preset questions match
     q_lower = query.lower()
     
-    if "3400" in q_lower or "depth" in q_lower or "nearby" in q_lower and "interval" in q_lower:
+    if "3400" in q_lower or "depth" in q_lower or ("nearby" in q_lower and "interval" in q_lower):
         answer_text = (
             f"Within the 3,380m – 3,470m depth interval across the Barail Sandstone / XYZ Formation, "
             f"historical records reveal two critical operational events in immediate offset wells. "
-            f"WELL-B-03 (2.8 km NE) encountered severe dynamic lost circulation of 48 bbl/hr at 3,440m "
-            f"requiring a 50 bbl engineered high-fluid-loss LCM pill. Concurrently, WELL-C-07 (4.1 km SW) "
+            f"WELL-B-03 (2.69 km away) encountered severe dynamic lost circulation of 48 bbl/hr at 3,440m "
+            f"requiring a 50 bbl engineered high-fluid-loss LCM pill. Concurrently, WELL-C-07 (3.95 km away) "
             f"experienced severe torsional stick-slip oscillations and torque surging up to 28.2 kft-lbs at 3,390m."
         )
-    elif "mud loss" in q_lower or "lost circulation" in q_lower or "xyz" in q_lower:
+    elif "mud loss" in q_lower or "lost circulation" in q_lower or "mud-loss" in q_lower:
         answer_text = (
             f"Historical mud-loss records in the Barail Sandstone / XYZ Formation show multiple loss occurrences. "
             f"Most notably, offset well WELL-B-03 recorded total dynamic losses of 48 bbl/hr at 3,440m (documented in DDR-2024-017, page 4). "
-            f"Furthermore, WELL-E-11 (3.5 km away) encountered dry drilling / total returns loss of 85 bbls at 3,460m upon penetrating "
+            f"Furthermore, WELL-E-11 (3.10 km away) encountered dry drilling / total returns loss of 85 bbls at 3,460m upon penetrating "
             f"a localized fault boundary, which was cured with an 80 bbl crosslinked polymer gunk plug."
+        )
+    elif "similar" in q_lower and "condition" in q_lower:
+        answer_text = (
+            f"The closest historical analogs matching active well {active_well['id']}'s current drilling conditions (Barail XYZ sand, ~3,420m) are:\n"
+            f"1. WELL-N-02 (1.48 km, 95% similarity): Normal section drilling with minor seepage at 3,435m.\n"
+            f"2. WELL-B-03 (2.69 km, 91% similarity): Severe 48 bbl/hr lost circulation at 3,440m.\n"
+            f"3. WELL-U-22 (2.86 km, 90% similarity): Pack-off and high cutting beds at 3,415m.\n"
+            f"4. WELL-C-07 (3.95 km, 87% similarity): Extreme torque surges and stick-slip oscillations at 3,390m."
+        )
+    elif "watch" in q_lower or "signal" in q_lower or "alert" in q_lower or "risk" in q_lower:
+        answer_text = (
+            f"The active WATCH signal ALT-2026-0810-01 for current well {active_well['id']} (at 3,420m depth) "
+            f"is triggered by spatial and stratigraphic correlation with offset wells WELL-B-03 (2.69 km) and WELL-C-07 (3.95 km). "
+            f"Historical reports DDR-2024-017 (page 4) and DDR-2023-112 (page 3) demonstrate that penetrating the 3,420m–3,460m Barail facies "
+            f"has previously incurred sudden mud losses and torque spikes. Engineer review of LCM readiness is advised."
+        )
+    elif "compare" in q_lower and "b-03" in q_lower:
+        answer_text = (
+            f"Comparative analysis between active well {active_well['id']} and offset well WELL-B-03:\n"
+            f"- Spatial Distance: 2.69 km in Synthetic Exploration Block-4.\n"
+            f"- Stratigraphic Horizon: Both wells penetrate Barail Sandstone / XYZ Formation (WELL-A-01 bit at 3,420m; WELL-B-03 bit penetrated at 2,985m–3,650m).\n"
+            f"- Critical Historical Anomaly: WELL-B-03 experienced 48 bbl/hr lost circulation at 3,440m (only 20m ahead of current drilling depth).\n"
+            f"- Operational Precaution: Pre-mix LCM pill before drilling past 3,430m on WELL-A-01."
         )
     elif "stuck pipe" in q_lower:
         answer_text = (
             f"Historical stuck pipe was documented in deep exploratory offset WELL-D-02 at 3,610m within the Jaintia Limestone Formation "
             f"(documented in WCR-2022-088, page 12). The bottom-hole assembly experienced mechanical and differential sticking with overpull "
             f"exceeding 120 klbs. It required spotting a 40 bbl organic solvent pill followed by 6 hours of continuous hydraulic jarring at 90 klbs force."
-        )
-    elif "alert" in q_lower or "risk" in q_lower:
-        answer_text = (
-            f"The active High Priority Risk Alert ALT-2026-0810-01 for current well {active_well['id']} (at 3,420m depth) "
-            f"is triggered by spatial and stratigraphic correlation with WELL-B-03 and WELL-C-07. "
-            f"Historical data demonstrates that penetrating the 3,420m–3,460m Barail facies incurs high probabilities of sudden mud losses and torque spikes. "
-            f"Primary backing evidence is DDR-2024-017 and DDR-2023-112."
-        )
-    elif "compare" in q_lower and "b-03" in q_lower:
-        answer_text = (
-            f"Comparative analysis between active well {active_well['id']} and offset well WELL-B-03:\n"
-            f"- Spatial Distance: 2.8 km North-East in Brahma Basin Block-4.\n"
-            f"- Stratigraphic Horizon: Both wells penetrate Barail Sandstone / XYZ Formation (WELL-A-01 bit at 3,420m; WELL-B-03 bit penetrated at 2,985m–3,650m).\n"
-            f"- Critical Historical Anomaly: WELL-B-03 experienced 48 bbl/hr lost circulation at 3,440m (only 20m ahead of current drilling depth).\n"
-            f"- Operational Precaution: Pre-mix LCM pill before drilling past 3,430m on WELL-A-01."
         )
     else:
         # Synthesize from matched events
@@ -194,7 +202,7 @@ Do not hallucinate facts.
         "relevant_wells": relevant_wells if relevant_wells else ["WELL-B-03", "WELL-C-07"],
         "historical_events": events_list[:4],
         "evidence_documents": evidence_docs if evidence_docs else ["DOC-DDR-2024-017"],
-        "engineer_note": "AI-generated summary. Verify against source documents. Human-in-the-loop validation required.",
+        "engineer_note": "AI-generated summary — verify against source documents.",
         "confidence_factors": {
             "spatial_correlation": 0.92,
             "stratigraphic_match": 0.98,

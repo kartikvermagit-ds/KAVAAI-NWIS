@@ -3,9 +3,20 @@ import json
 import os
 from typing import List, Dict, Any, Optional
 from .config import settings
-from .seed_data import WELLS_DATA, FORMATIONS, DRILLING_EVENTS, DOCUMENTS_DATA, generate_trajectory, calculate_distance
 
 DB_PATH = settings.DATABASE_PATH
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, "data", "synthetic")
+
+def load_json_file(filename: str, fallback_data: Any) -> Any:
+    filepath = os.path.join(DATA_DIR, filename)
+    if os.path.exists(filepath):
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error loading {filepath}: {e}")
+    return fallback_data
 
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
@@ -32,7 +43,8 @@ def init_db():
         operator TEXT,
         is_active INTEGER,
         distance_km REAL,
-        similarity_score REAL
+        similarity_score REAL,
+        major_event TEXT
     )
     """)
     
@@ -63,6 +75,7 @@ def init_db():
         action_taken TEXT,
         outcome TEXT,
         document_id TEXT,
+        document_type TEXT,
         page_number INTEGER,
         FOREIGN KEY (well_id) REFERENCES wells (id)
     )
@@ -122,9 +135,10 @@ def init_db():
     
     conn.commit()
     
-    # Check if data exists, if not seed it
+    # Check if data exists or reload to ensure consistency
     cursor.execute("SELECT COUNT(*) FROM wells")
-    if cursor.fetchone()[0] == 0:
+    count = cursor.fetchone()[0]
+    if count == 0:
         seed_database(conn)
     
     conn.close()
@@ -132,43 +146,58 @@ def init_db():
 def seed_database(conn):
     cursor = conn.cursor()
     
+    # Clean old records to refresh from single source of truth
+    cursor.execute("DELETE FROM wells")
+    cursor.execute("DELETE FROM formations")
+    cursor.execute("DELETE FROM drilling_events")
+    cursor.execute("DELETE FROM documents")
+    cursor.execute("DELETE FROM well_trajectories")
+    cursor.execute("DELETE FROM alerts")
+    
+    # Load JSON files
+    wells = load_json_file("wells.json", [])
+    formations = load_json_file("formations.json", [])
+    events = load_json_file("events.json", [])
+    documents = load_json_file("documents.json", [])
+    trajectories = load_json_file("trajectories.json", {})
+    
     # Insert Wells
-    for w in WELLS_DATA:
+    for w in wells:
         cursor.execute("""
-        INSERT INTO wells VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO wells VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             w["id"], w["well_name"], w["field"], w["latitude"], w["longitude"],
             w["spud_date"], w["total_depth"], w["current_depth"], w["formation"],
             w["status"], w["operator"], 1 if w["is_active"] else 0,
-            w["distance_km"], w["similarity_score"]
+            w["distance_km"], w["similarity_score"], w.get("major_event", "Normal section drilling")
         ))
         
         # Insert trajectory for well
-        traj = generate_trajectory(w["id"], w["total_depth"])
-        for pt in traj:
+        well_traj = trajectories.get(w["id"], [])
+        for pt in well_traj:
             cursor.execute("""
             INSERT INTO well_trajectories (well_id, md, tvd, inclination, azimuth, dogleg_severity)
             VALUES (?, ?, ?, ?, ?, ?)
             """, (w["id"], pt["md"], pt["tvd"], pt["inclination"], pt["azimuth"], pt["dogleg_severity"]))
     
     # Insert Formations
-    for f in FORMATIONS:
+    for f in formations:
         cursor.execute("""
         INSERT INTO formations VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (f["id"], f["name"], f["top_depth"], f["bottom_depth"], f["lithology"], f["description"], f["typical_hazards"]))
         
     # Insert Events
-    for e in DRILLING_EVENTS:
+    for e in events:
         cursor.execute("""
-        INSERT INTO drilling_events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO drilling_events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             e["id"], e["well_id"], e["date"], e["depth"], e["formation"],
             e["event_type"], e["severity"], e["description"], e["action_taken"],
-            e["outcome"], e.get("document_id"), e.get("page_number", 1)
+            e["outcome"], e.get("document_id"), e.get("document_type", "DDR"), e.get("page_number", 1)
         ))
         
     # Insert Documents
-    for d in DOCUMENTS_DATA:
+    for d in documents:
         cursor.execute("""
         INSERT INTO documents VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
@@ -178,12 +207,12 @@ def seed_database(conn):
             json.dumps(d.get("extracted_parameters", {})), d["content_text"]
         ))
         
-    # Seed Initial Demo Alert
+    # Seed Initial Demo Alert with WATCH signal
     cursor.execute("""
     INSERT INTO alerts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         "ALT-2026-0810-01",
-        "HIGH",
+        "WATCH",
         "Potential Historical Risk Interval: Mud Loss & Drag",
         3420.0,
         3,
@@ -191,9 +220,9 @@ def seed_database(conn):
         json.dumps(["WELL-B-03", "WELL-C-07", "WELL-E-11"]),
         "DOC-DDR-2024-017",
         "Historical pattern detected in comparable depth interval (3,380m - 3,470m) within Barail XYZ Formation. Offset well WELL-B-03 experienced 48 bbl/hr mud loss at 3,440m; WELL-C-07 observed stick-slip and torque surge at 3,390m.",
-        "Engineer review required prior to drilling past 3,420m. Verify LCM inventory on rig, pre-treat mud with lubricity beads, and monitor standpipe pressure closely.",
+        "Review offset-well reports before proceeding through the comparable interval. Verify LCM inventory on rig and monitor rotary torque trends.",
         0,
-        "2026-08-10 14:30:00"
+        "2026-08-10 14:30 IST"
     ))
     
     conn.commit()
@@ -223,7 +252,8 @@ def get_active_well() -> Dict[str, Any]:
     conn.close()
     if row:
         return dict(row)
-    return WELLS_DATA[0]
+    wells = load_json_file("wells.json", [])
+    return wells[0] if wells else {}
 
 def get_well_trajectory(well_id: str) -> List[Dict[str, Any]]:
     conn = get_db_connection()

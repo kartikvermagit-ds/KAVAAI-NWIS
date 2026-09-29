@@ -47,12 +47,12 @@ export const AlertCenter: React.FC<AlertCenterProps> = ({ activeWell, onNavigate
         <div>
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold font-mono text-white">Alert Center & Action Protocol</h1>
-            <span className="text-xs bg-red-950 text-red-300 font-mono px-2 py-0.5 rounded border border-red-700/50">
-              Live Offset Risk Notifications
+            <span className="text-xs bg-amber-950 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-700/50">
+              Historical Watch Signals
             </span>
           </div>
           <p className="text-sm text-slate-400 mt-1">
-            Real-time advisory notifications triggered when active well parameters correlate with offset hazards
+            Advisory decision-support notices triggered when active well parameters correlate with synthetic offset hazards
           </p>
         </div>
 

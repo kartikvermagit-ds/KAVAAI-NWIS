@@ -1,0 +1,980 @@
+[
+  {
+    "id": "DOC-DDR-2024-017",
+    "document_name": "DDR-2024-017_WELL-B-03_Daily_Drilling_Report.pdf",
+    "well_id": "WELL-B-03",
+    "document_type": "DDR",
+    "date": "2024-08-17",
+    "depth_interval": "3,400m - 3,520m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Daily drilling report for WELL-B-03 covering 12-1/4 inch hole section through Barail Sandstone / XYZ Formation. Records severe lost circulation event at 3,440m with 48 bbl/hr mud loss and pumping of 50 bbl high-fluid-loss LCM pill.",
+    "file_size_kb": 312,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-B-03",
+      "date": "2024-08-17",
+      "interval_md": "3400.0 - 3520.0 m",
+      "formation": "Barail Sandstone / XYZ Formation",
+      "mud_type": "Water-Based Glycol Polymer (WBM)",
+      "mud_weight_sg": 1.3,
+      "flow_rate_gpm": 540,
+      "standpipe_pressure_psi": 2650,
+      "wob_klbs": 26.5,
+      "rpm": 125,
+      "losses_recorded": "48 bbl/hr dynamic loss at 3,440m",
+      "lcm_pill_pumped": "50 bbl (30 ppb coarse CaCO3 + 15 ppb nutshells + 5 ppb fiber)",
+      "outcome": "Stabilized at 4 bbl/hr, safe drilling resumed"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATOR: SYNTHETIC E&P DEMO CORP\nDAILY DRILLING REPORT (DDR) #17 | WELL: WELL-B-03\nFIELD: SYNTHETIC EXPLORATION BLOCK-4 | RIG: SYNTHETIC HORIZON RIG-04\nDATE: 17-AUG-2024 | REPORT TIME: 06:00 HRS - 06:00 HRS (24 HR PERIOD)\nCURRENT DEPTH: 3,520.0 m MD / 3,248.0 m TVD | MIDNIGHT DEPTH: 3,400.0 m MD\n========================================================================================\n\nSECTION SUMMARY:\n- Hole Size: 12-1/4 inch\n- Formation at bit: Barail Sandstone / XYZ Formation (Top penetrated at 2,985m)\n- Lithology: Interbedded hard sandstone, micro-fractured reservoir facies, coal stringers\n\nDRILLING DRIFT / OPERATIONS LOG:\n06:00 - 11:30: Rotary drilling 12-1/4\" hole from 3,400m to 3,440m with WOB 26 klbs, RPM 125, SPP 2650 psi, GPM 540.\n11:30 - 12:15: EVENT OCCURRENCE - At 3,440m depth, sudden drop in pit volume observed (-62 bbls in 40 mins).\n               Flow paddle dropped from 100% to 55%. Calculated loss rate: 48 bbl/hr into Barail XYZ natural fracture network.\n12:15 - 13:00: Ceased drilling, picked up off bottom to 3,415m. Monitored annulus: well static with pumps off.\n13:00 - 15:30: Mixed 50 bbl engineered high-fluid-loss LCM pill:\n               - 30 ppb coarse calcium carbonate\n               - 15 ppb walnut shells (medium/coarse blend)\n               - 5 ppb cellulosic bridging fiber\n15:30 - 17:00: Displaced LCM pill through bit nozzles at 200 gpm, squeezed 15 bbls into loss zone at 250 psi surface pressure.\n17:00 - 19:30: Soaked pill for 2.5 hours. Re-established circulation at 350 gpm with 100% returns.\n19:30 - 06:00: Washed back to bottom, resumed drilling with 1.26 SG mud weight to 3,520m. Dynamic loss controlled at <4 bbl/hr.\n\nMUD PARAMETERS:\n- Mud Weight: 1.30 SG reduced to 1.26 SG\n- Funnel Viscosity: 52 sec/qt\n- Plastic Viscosity: 22 cP | Yield Point: 24 lb/100ft2\n- API Fluid Loss: 5.2 cc/30min\n- Chlorides: 38,000 mg/L\n\nENGINEER SIGN-OFF:\nLead Drilling Engineer: R. Barua (Synthetic Demo) | Rig Superintendent: M. Ahmed\n        "
+  },
+  {
+    "id": "DOC-DDR-2023-112",
+    "document_name": "DDR-2023-112_WELL-C-07_Daily_Drilling_Report.pdf",
+    "well_id": "WELL-C-07",
+    "document_type": "DDR",
+    "date": "2023-12-04",
+    "depth_interval": "3,350m - 3,480m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Daily drilling report for WELL-C-07 documenting extreme torque surges and stick-slip oscillations at 3,390m in Barail Sandstone / XYZ Formation.",
+    "file_size_kb": 288,
+    "page_count": 5,
+    "extracted_parameters": {
+      "well": "WELL-C-07",
+      "date": "2023-12-04",
+      "interval_md": "3350.0 - 3480.0 m",
+      "formation": "Barail Sandstone / XYZ Formation",
+      "mud_type": "Synthetic Ester-Based OBM",
+      "mud_weight_sg": 1.28,
+      "torque_kft_lbs": "Spiked to 28.2 kft-lbs",
+      "event": "Torque Surge / Stick-Slip",
+      "action": "Pumped 25 bbl polymer bead pill, adjusted WOB/RPM"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATOR: SYNTHETIC E&P DEMO CORP\nDAILY DRILLING REPORT (DDR) #112 | WELL: WELL-C-07\nFIELD: SYNTHETIC EXPLORATION BLOCK-4 | RIG: EXPLORER VII\nDATE: 04-DEC-2023 | CURRENT DEPTH: 3,480.0 m MD\n========================================================================================\n\nINTERVAL ANALYSIS:\nDepth 3,390m - Barail Sandstone XYZ Formation. Hard abrasive sandstone lenses causing severe top-drive motor stall.\nRotary torque peaked at 28.2 kft-lbs (maximum allowable 30 kft-lbs). MWD telemetry recorded stick-slip severity index >85%.\n\nREMEDIATION:\nPumping 25 bbl lubricity pill containing copolymer beads. Reduced WOB from 32 klbs to 18 klbs and raised string rotation to 140 RPM.\nTorque dampened to smooth 16 kft-lbs.\n        "
+  },
+  {
+    "id": "DOC-DDR-2024-045",
+    "document_name": "DDR-2024-045_WELL-E-11_Daily_Drilling_Report.pdf",
+    "well_id": "WELL-E-11",
+    "document_type": "DDR",
+    "date": "2024-03-22",
+    "depth_interval": "3,410m - 3,500m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Report on total mud loss and well control standby at 3,460m in WELL-E-11.",
+    "file_size_kb": 340,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-E-11",
+      "date": "2024-03-22",
+      "interval_md": "3410.0 - 3500.0 m",
+      "formation": "Barail Sandstone / XYZ Formation",
+      "mud_weight_sg": 1.32,
+      "event": "Total Mud Loss (85 bbl loss)",
+      "action": "Spotted 80 bbl cross-linked polymer pill + gunk plug"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATOR: SYNTHETIC E&P DEMO CORP\nDAILY DRILLING REPORT #45 | WELL: WELL-E-11\nDATE: 22-MAR-2024 | DEPTH: 3,500.0 m MD\n========================================================================================\n\nTotal fluid loss encountered at 3,460m upon drilling through faulted boundary of Barail XYZ sand.\nReturns dropped to zero. Pit dropped 85 bbls. Spotted 80 bbl high viscosity crosslinked gel pill.\nSuccessfully tagged top of plug and restored full circulation.\n        "
+  },
+  {
+    "id": "DOC-WCR-2022-088",
+    "document_name": "WCR-2022-088_WELL-D-02_Well_Completion_Report.pdf",
+    "well_id": "WELL-D-02",
+    "document_type": "WCR",
+    "date": "2022-11-15",
+    "depth_interval": "0m - 4,410m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Comprehensive Well Completion Report for WELL-D-02 detailing deep drilling hazards, stuck pipe incidents at 3,610m, and formation evaluation across Jaintia Limestone.",
+    "file_size_kb": 890,
+    "page_count": 48,
+    "extracted_parameters": {
+      "well": "WELL-D-02",
+      "total_depth_md": "4,410.0 m",
+      "spud_date": "2022-09-05",
+      "completion_date": "2022-11-10",
+      "primary_hazards": "Stuck pipe at 3610m, Jaintia carbonate vug losses"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nWELL COMPLETION REPORT (WCR) | WELL: WELL-D-02\nFIELD: SYNTHETIC HAPJAN SECTOR | TOTAL DEPTH: 4,410.0 m MD\n========================================================================================\n\nFINAL GEOLOGICAL & DRILLING REVIEW:\nWell spudded on 05-SEP-2022 and reached TD of 4,410m in Jaintia Limestone.\nKey operational bottleneck occurred at 3,610m with differential and mechanical stuck pipe during wiper trip.\nJarred for 6 hours with 90 klbs downward impact after spotting organic freeing agent.\n        "
+  },
+  {
+    "id": "DOC-ML-2024-019",
+    "document_name": "ML-2024-019_WELL-B-03_Mud_Log_Barail.pdf",
+    "well_id": "WELL-B-03",
+    "document_type": "Mud Log",
+    "date": "2024-08-18",
+    "depth_interval": "3,400m - 3,600m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Mud logging evaluation log recording total gas readings, lithology percentage, rate of penetration (ROP), and fracture indicators across Barail Sandstone.",
+    "file_size_kb": 420,
+    "page_count": 8,
+    "extracted_parameters": {
+      "well": "WELL-B-03",
+      "formation": "Barail Sandstone / XYZ Formation",
+      "gas_peaks": "C1-C4 chromatograph peaks at 3438-3444m",
+      "rop_m_hr": "Spike from 4.5 m/hr to 18 m/hr (drilling break)"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nMUD LOGGING REPORT | WELL: WELL-B-03 | INTERVAL: 3400m - 3600m\n========================================================================================\nAt 3,439m - 3,442m: Sharp drilling break observed (ROP surged to 18.2 m/hr).\nTotal gas spiked to 14.8% followed immediately by lost circulation.\nLithology: 85% quartz sandstone, sub-angular, calcareous cement with secondary calcite veins.\n        "
+  },
+  {
+    "id": "DOC-CR-2024-008",
+    "document_name": "CR-2024-008_WELL-B-03_9_5_8_Casing_Report.pdf",
+    "well_id": "WELL-B-03",
+    "document_type": "Casing Report",
+    "date": "2024-07-28",
+    "depth_interval": "2,950m Casing Shoe",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Casing and cementing report for 9-5/8 inch intermediate casing string set at 2,950m at top of Barail Formation.",
+    "file_size_kb": 210,
+    "page_count": 4,
+    "extracted_parameters": {
+      "well": "WELL-B-03",
+      "casing_size": "9-5/8 inch, 47 lb/ft L-80",
+      "shoe_depth": "2,950m MD",
+      "fit_lot_emw": "1.52 SG equivalent mud weight"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nCASING & CEMENTING SUMMARY | WELL: WELL-B-03 | 9-5/8\" INTERMEDIATE STRING\n========================================================================================\nCasing set at 2,950m MD right above Barail formation entrance.\nFormation Integrity Test (FIT) conducted to 1.52 SG equivalent mud weight without leak-off.\n        "
+  },
+  {
+    "id": "DOC-GEO-2024-012",
+    "document_name": "GEO-2024-012_Block4_Barail_Correlation.pdf",
+    "well_id": "WELL-A-01",
+    "document_type": "Geological Report",
+    "date": "2026-08-01",
+    "depth_interval": "3,000m - 3,700m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Pre-drill geological prognosis and stratigraphic correlation study for WELL-A-01 tying into offset wells WELL-B-03 and WELL-C-07.",
+    "file_size_kb": 560,
+    "page_count": 14,
+    "extracted_parameters": {
+      "target_well": "WELL-A-01",
+      "predicted_barail_top": "2,975m MD",
+      "predicted_hazard_window": "3,400m - 3,475m MD",
+      "offset_analogs": "WELL-B-03, WELL-C-07, WELL-E-11"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nPRE-DRILL GEOLOGICAL PROGNOSIS | BLOCK-4 EXPLORATION | WELL-A-01\n========================================================================================\nSeismic correlation indicates prominent fault-bounded anticline.\nThe Barail XYZ reservoir facies at ~3,400-3,460m displays high amplitude seismic anomalies matching\nthe fractured loss interval observed in WELL-B-03 (2.69 km NE) and torque anomalies in WELL-C-07 (3.95 km SW).\n        "
+  },
+  {
+    "id": "DOC-CAS-SYN-008",
+    "document_name": "CAS-2024-008_WELL-N-02_Operational_Log.pdf",
+    "well_id": "WELL-N-02",
+    "document_type": "Casing Report",
+    "date": "2023-09-15",
+    "depth_interval": "3320m - 3620m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-N-02 covering section operations and parameters.",
+    "file_size_kb": 228,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-N-02",
+      "report_type": "Casing Report",
+      "monitored_depth": "3440m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-N-02\n========================================================================================\nRoutine operational log for synthetic offset well WELL-N-02 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-009",
+    "document_name": "DRI-2024-009_WELL-N-02_Operational_Log.pdf",
+    "well_id": "WELL-N-02",
+    "document_type": "Drilling Report",
+    "date": "2024-10-15",
+    "depth_interval": "3360m - 3660m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-N-02 covering section operations and parameters.",
+    "file_size_kb": 234,
+    "page_count": 7,
+    "extracted_parameters": {
+      "well": "WELL-N-02",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3470m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-N-02\n========================================================================================\nRoutine operational log for synthetic offset well WELL-N-02 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-010",
+    "document_name": "DRI-2024-010_WELL-B-03_Operational_Log.pdf",
+    "well_id": "WELL-B-03",
+    "document_type": "Drilling Report",
+    "date": "2023-11-15",
+    "depth_interval": "3000m - 3300m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-B-03 covering section operations and parameters.",
+    "file_size_kb": 240,
+    "page_count": 3,
+    "extracted_parameters": {
+      "well": "WELL-B-03",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3200m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-B-03\n========================================================================================\nRoutine operational log for synthetic offset well WELL-B-03 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-011",
+    "document_name": "DDR-2024-011_WELL-B-03_Operational_Log.pdf",
+    "well_id": "WELL-B-03",
+    "document_type": "DDR",
+    "date": "2024-12-15",
+    "depth_interval": "3040m - 3340m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-B-03 covering section operations and parameters.",
+    "file_size_kb": 246,
+    "page_count": 4,
+    "extracted_parameters": {
+      "well": "WELL-B-03",
+      "report_type": "DDR",
+      "monitored_depth": "3230m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-B-03\n========================================================================================\nRoutine operational log for synthetic offset well WELL-B-03 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-012",
+    "document_name": "DDR-2024-012_WELL-U-22_Operational_Log.pdf",
+    "well_id": "WELL-U-22",
+    "document_type": "DDR",
+    "date": "2023-01-15",
+    "depth_interval": "3080m - 3380m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-U-22 covering section operations and parameters.",
+    "file_size_kb": 252,
+    "page_count": 5,
+    "extracted_parameters": {
+      "well": "WELL-U-22",
+      "report_type": "DDR",
+      "monitored_depth": "3260m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-U-22\n========================================================================================\nRoutine operational log for synthetic offset well WELL-U-22 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-013",
+    "document_name": "CAS-2024-013_WELL-U-22_Operational_Log.pdf",
+    "well_id": "WELL-U-22",
+    "document_type": "Casing Report",
+    "date": "2024-02-15",
+    "depth_interval": "3120m - 3420m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-U-22 covering section operations and parameters.",
+    "file_size_kb": 258,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-U-22",
+      "report_type": "Casing Report",
+      "monitored_depth": "3290m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-U-22\n========================================================================================\nRoutine operational log for synthetic offset well WELL-U-22 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-014",
+    "document_name": "CAS-2024-014_WELL-E-11_Operational_Log.pdf",
+    "well_id": "WELL-E-11",
+    "document_type": "Casing Report",
+    "date": "2023-03-15",
+    "depth_interval": "3160m - 3460m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-E-11 covering section operations and parameters.",
+    "file_size_kb": 264,
+    "page_count": 7,
+    "extracted_parameters": {
+      "well": "WELL-E-11",
+      "report_type": "Casing Report",
+      "monitored_depth": "3320m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-E-11\n========================================================================================\nRoutine operational log for synthetic offset well WELL-E-11 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-015",
+    "document_name": "DRI-2024-015_WELL-E-11_Operational_Log.pdf",
+    "well_id": "WELL-E-11",
+    "document_type": "Drilling Report",
+    "date": "2024-04-15",
+    "depth_interval": "3200m - 3500m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-E-11 covering section operations and parameters.",
+    "file_size_kb": 270,
+    "page_count": 3,
+    "extracted_parameters": {
+      "well": "WELL-E-11",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3350m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-E-11\n========================================================================================\nRoutine operational log for synthetic offset well WELL-E-11 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-016",
+    "document_name": "DRI-2024-016_WELL-G-09_Operational_Log.pdf",
+    "well_id": "WELL-G-09",
+    "document_type": "Drilling Report",
+    "date": "2023-05-15",
+    "depth_interval": "3240m - 3540m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-G-09 covering section operations and parameters.",
+    "file_size_kb": 276,
+    "page_count": 4,
+    "extracted_parameters": {
+      "well": "WELL-G-09",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3380m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-G-09\n========================================================================================\nRoutine operational log for synthetic offset well WELL-G-09 recording drilling parameters,\nlithological evaluation, and telemetry through Kopili Shale Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-017",
+    "document_name": "DDR-2024-017_WELL-G-09_Operational_Log.pdf",
+    "well_id": "WELL-G-09",
+    "document_type": "DDR",
+    "date": "2024-06-15",
+    "depth_interval": "3280m - 3580m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-G-09 covering section operations and parameters.",
+    "file_size_kb": 282,
+    "page_count": 5,
+    "extracted_parameters": {
+      "well": "WELL-G-09",
+      "report_type": "DDR",
+      "monitored_depth": "3410m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-G-09\n========================================================================================\nRoutine operational log for synthetic offset well WELL-G-09 recording drilling parameters,\nlithological evaluation, and telemetry through Kopili Shale Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-018",
+    "document_name": "DDR-2024-018_WELL-C-07_Operational_Log.pdf",
+    "well_id": "WELL-C-07",
+    "document_type": "DDR",
+    "date": "2023-07-15",
+    "depth_interval": "3320m - 3620m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-C-07 covering section operations and parameters.",
+    "file_size_kb": 288,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-C-07",
+      "report_type": "DDR",
+      "monitored_depth": "3440m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-C-07\n========================================================================================\nRoutine operational log for synthetic offset well WELL-C-07 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-019",
+    "document_name": "CAS-2024-019_WELL-C-07_Operational_Log.pdf",
+    "well_id": "WELL-C-07",
+    "document_type": "Casing Report",
+    "date": "2024-08-15",
+    "depth_interval": "3360m - 3660m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-C-07 covering section operations and parameters.",
+    "file_size_kb": 294,
+    "page_count": 7,
+    "extracted_parameters": {
+      "well": "WELL-C-07",
+      "report_type": "Casing Report",
+      "monitored_depth": "3470m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-C-07\n========================================================================================\nRoutine operational log for synthetic offset well WELL-C-07 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-020",
+    "document_name": "CAS-2024-020_WELL-D-02_Operational_Log.pdf",
+    "well_id": "WELL-D-02",
+    "document_type": "Casing Report",
+    "date": "2023-09-15",
+    "depth_interval": "3000m - 3300m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-D-02 covering section operations and parameters.",
+    "file_size_kb": 300,
+    "page_count": 3,
+    "extracted_parameters": {
+      "well": "WELL-D-02",
+      "report_type": "Casing Report",
+      "monitored_depth": "3200m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-D-02\n========================================================================================\nRoutine operational log for synthetic offset well WELL-D-02 recording drilling parameters,\nlithological evaluation, and telemetry through Jaintia Limestone / ABC Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-021",
+    "document_name": "DRI-2024-021_WELL-D-02_Operational_Log.pdf",
+    "well_id": "WELL-D-02",
+    "document_type": "Drilling Report",
+    "date": "2024-10-15",
+    "depth_interval": "3040m - 3340m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-D-02 covering section operations and parameters.",
+    "file_size_kb": 306,
+    "page_count": 4,
+    "extracted_parameters": {
+      "well": "WELL-D-02",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3230m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-D-02\n========================================================================================\nRoutine operational log for synthetic offset well WELL-D-02 recording drilling parameters,\nlithological evaluation, and telemetry through Jaintia Limestone / ABC Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-022",
+    "document_name": "DRI-2024-022_WELL-F-05_Operational_Log.pdf",
+    "well_id": "WELL-F-05",
+    "document_type": "Drilling Report",
+    "date": "2023-11-15",
+    "depth_interval": "3080m - 3380m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-F-05 covering section operations and parameters.",
+    "file_size_kb": 312,
+    "page_count": 5,
+    "extracted_parameters": {
+      "well": "WELL-F-05",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3260m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-F-05\n========================================================================================\nRoutine operational log for synthetic offset well WELL-F-05 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-023",
+    "document_name": "DDR-2024-023_WELL-F-05_Operational_Log.pdf",
+    "well_id": "WELL-F-05",
+    "document_type": "DDR",
+    "date": "2024-12-15",
+    "depth_interval": "3120m - 3420m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-F-05 covering section operations and parameters.",
+    "file_size_kb": 318,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-F-05",
+      "report_type": "DDR",
+      "monitored_depth": "3290m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-F-05\n========================================================================================\nRoutine operational log for synthetic offset well WELL-F-05 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-024",
+    "document_name": "DDR-2024-024_WELL-H-14_Operational_Log.pdf",
+    "well_id": "WELL-H-14",
+    "document_type": "DDR",
+    "date": "2023-01-15",
+    "depth_interval": "3160m - 3460m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-H-14 covering section operations and parameters.",
+    "file_size_kb": 324,
+    "page_count": 7,
+    "extracted_parameters": {
+      "well": "WELL-H-14",
+      "report_type": "DDR",
+      "monitored_depth": "3320m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-H-14\n========================================================================================\nRoutine operational log for synthetic offset well WELL-H-14 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-025",
+    "document_name": "CAS-2024-025_WELL-H-14_Operational_Log.pdf",
+    "well_id": "WELL-H-14",
+    "document_type": "Casing Report",
+    "date": "2024-02-15",
+    "depth_interval": "3200m - 3500m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-H-14 covering section operations and parameters.",
+    "file_size_kb": 330,
+    "page_count": 3,
+    "extracted_parameters": {
+      "well": "WELL-H-14",
+      "report_type": "Casing Report",
+      "monitored_depth": "3350m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-H-14\n========================================================================================\nRoutine operational log for synthetic offset well WELL-H-14 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-026",
+    "document_name": "CAS-2024-026_WELL-I-04_Operational_Log.pdf",
+    "well_id": "WELL-I-04",
+    "document_type": "Casing Report",
+    "date": "2023-03-15",
+    "depth_interval": "3240m - 3540m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-I-04 covering section operations and parameters.",
+    "file_size_kb": 336,
+    "page_count": 4,
+    "extracted_parameters": {
+      "well": "WELL-I-04",
+      "report_type": "Casing Report",
+      "monitored_depth": "3380m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-I-04\n========================================================================================\nRoutine operational log for synthetic offset well WELL-I-04 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-027",
+    "document_name": "DRI-2024-027_WELL-I-04_Operational_Log.pdf",
+    "well_id": "WELL-I-04",
+    "document_type": "Drilling Report",
+    "date": "2024-04-15",
+    "depth_interval": "3280m - 3580m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-I-04 covering section operations and parameters.",
+    "file_size_kb": 342,
+    "page_count": 5,
+    "extracted_parameters": {
+      "well": "WELL-I-04",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3410m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-I-04\n========================================================================================\nRoutine operational log for synthetic offset well WELL-I-04 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-028",
+    "document_name": "DRI-2024-028_WELL-J-08_Operational_Log.pdf",
+    "well_id": "WELL-J-08",
+    "document_type": "Drilling Report",
+    "date": "2023-05-15",
+    "depth_interval": "3320m - 3620m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-J-08 covering section operations and parameters.",
+    "file_size_kb": 348,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-J-08",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3440m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-J-08\n========================================================================================\nRoutine operational log for synthetic offset well WELL-J-08 recording drilling parameters,\nlithological evaluation, and telemetry through Kopili Shale Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-029",
+    "document_name": "DDR-2024-029_WELL-J-08_Operational_Log.pdf",
+    "well_id": "WELL-J-08",
+    "document_type": "DDR",
+    "date": "2024-06-15",
+    "depth_interval": "3360m - 3660m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-J-08 covering section operations and parameters.",
+    "file_size_kb": 354,
+    "page_count": 7,
+    "extracted_parameters": {
+      "well": "WELL-J-08",
+      "report_type": "DDR",
+      "monitored_depth": "3470m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-J-08\n========================================================================================\nRoutine operational log for synthetic offset well WELL-J-08 recording drilling parameters,\nlithological evaluation, and telemetry through Kopili Shale Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-030",
+    "document_name": "DDR-2024-030_WELL-K-12_Operational_Log.pdf",
+    "well_id": "WELL-K-12",
+    "document_type": "DDR",
+    "date": "2023-07-15",
+    "depth_interval": "3000m - 3300m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-K-12 covering section operations and parameters.",
+    "file_size_kb": 360,
+    "page_count": 3,
+    "extracted_parameters": {
+      "well": "WELL-K-12",
+      "report_type": "DDR",
+      "monitored_depth": "3200m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-K-12\n========================================================================================\nRoutine operational log for synthetic offset well WELL-K-12 recording drilling parameters,\nlithological evaluation, and telemetry through Jaintia Limestone / ABC Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-031",
+    "document_name": "CAS-2024-031_WELL-K-12_Operational_Log.pdf",
+    "well_id": "WELL-K-12",
+    "document_type": "Casing Report",
+    "date": "2024-08-15",
+    "depth_interval": "3040m - 3340m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-K-12 covering section operations and parameters.",
+    "file_size_kb": 366,
+    "page_count": 4,
+    "extracted_parameters": {
+      "well": "WELL-K-12",
+      "report_type": "Casing Report",
+      "monitored_depth": "3230m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-K-12\n========================================================================================\nRoutine operational log for synthetic offset well WELL-K-12 recording drilling parameters,\nlithological evaluation, and telemetry through Jaintia Limestone / ABC Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-032",
+    "document_name": "CAS-2024-032_WELL-L-06_Operational_Log.pdf",
+    "well_id": "WELL-L-06",
+    "document_type": "Casing Report",
+    "date": "2023-09-15",
+    "depth_interval": "3080m - 3380m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-L-06 covering section operations and parameters.",
+    "file_size_kb": 372,
+    "page_count": 5,
+    "extracted_parameters": {
+      "well": "WELL-L-06",
+      "report_type": "Casing Report",
+      "monitored_depth": "3260m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-L-06\n========================================================================================\nRoutine operational log for synthetic offset well WELL-L-06 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-033",
+    "document_name": "DRI-2024-033_WELL-L-06_Operational_Log.pdf",
+    "well_id": "WELL-L-06",
+    "document_type": "Drilling Report",
+    "date": "2024-10-15",
+    "depth_interval": "3120m - 3420m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-L-06 covering section operations and parameters.",
+    "file_size_kb": 378,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-L-06",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3290m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-L-06\n========================================================================================\nRoutine operational log for synthetic offset well WELL-L-06 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-034",
+    "document_name": "DRI-2024-034_WELL-M-15_Operational_Log.pdf",
+    "well_id": "WELL-M-15",
+    "document_type": "Drilling Report",
+    "date": "2023-11-15",
+    "depth_interval": "3160m - 3460m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-M-15 covering section operations and parameters.",
+    "file_size_kb": 384,
+    "page_count": 7,
+    "extracted_parameters": {
+      "well": "WELL-M-15",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3320m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-M-15\n========================================================================================\nRoutine operational log for synthetic offset well WELL-M-15 recording drilling parameters,\nlithological evaluation, and telemetry through Kopili Shale Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-035",
+    "document_name": "DDR-2024-035_WELL-M-15_Operational_Log.pdf",
+    "well_id": "WELL-M-15",
+    "document_type": "DDR",
+    "date": "2024-12-15",
+    "depth_interval": "3200m - 3500m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-M-15 covering section operations and parameters.",
+    "file_size_kb": 390,
+    "page_count": 3,
+    "extracted_parameters": {
+      "well": "WELL-M-15",
+      "report_type": "DDR",
+      "monitored_depth": "3350m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-M-15\n========================================================================================\nRoutine operational log for synthetic offset well WELL-M-15 recording drilling parameters,\nlithological evaluation, and telemetry through Kopili Shale Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-036",
+    "document_name": "DDR-2024-036_WELL-P-18_Operational_Log.pdf",
+    "well_id": "WELL-P-18",
+    "document_type": "DDR",
+    "date": "2023-01-15",
+    "depth_interval": "3240m - 3540m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-P-18 covering section operations and parameters.",
+    "file_size_kb": 396,
+    "page_count": 4,
+    "extracted_parameters": {
+      "well": "WELL-P-18",
+      "report_type": "DDR",
+      "monitored_depth": "3380m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-P-18\n========================================================================================\nRoutine operational log for synthetic offset well WELL-P-18 recording drilling parameters,\nlithological evaluation, and telemetry through Kopili Shale Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-037",
+    "document_name": "CAS-2024-037_WELL-P-18_Operational_Log.pdf",
+    "well_id": "WELL-P-18",
+    "document_type": "Casing Report",
+    "date": "2024-02-15",
+    "depth_interval": "3280m - 3580m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-P-18 covering section operations and parameters.",
+    "file_size_kb": 402,
+    "page_count": 5,
+    "extracted_parameters": {
+      "well": "WELL-P-18",
+      "report_type": "Casing Report",
+      "monitored_depth": "3410m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-P-18\n========================================================================================\nRoutine operational log for synthetic offset well WELL-P-18 recording drilling parameters,\nlithological evaluation, and telemetry through Kopili Shale Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-038",
+    "document_name": "CAS-2024-038_WELL-Q-21_Operational_Log.pdf",
+    "well_id": "WELL-Q-21",
+    "document_type": "Casing Report",
+    "date": "2023-03-15",
+    "depth_interval": "3320m - 3620m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-Q-21 covering section operations and parameters.",
+    "file_size_kb": 408,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-Q-21",
+      "report_type": "Casing Report",
+      "monitored_depth": "3440m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-Q-21\n========================================================================================\nRoutine operational log for synthetic offset well WELL-Q-21 recording drilling parameters,\nlithological evaluation, and telemetry through Jaintia Limestone / ABC Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-039",
+    "document_name": "DRI-2024-039_WELL-Q-21_Operational_Log.pdf",
+    "well_id": "WELL-Q-21",
+    "document_type": "Drilling Report",
+    "date": "2024-04-15",
+    "depth_interval": "3360m - 3660m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-Q-21 covering section operations and parameters.",
+    "file_size_kb": 414,
+    "page_count": 7,
+    "extracted_parameters": {
+      "well": "WELL-Q-21",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3470m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-Q-21\n========================================================================================\nRoutine operational log for synthetic offset well WELL-Q-21 recording drilling parameters,\nlithological evaluation, and telemetry through Jaintia Limestone / ABC Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-040",
+    "document_name": "DRI-2024-040_WELL-R-10_Operational_Log.pdf",
+    "well_id": "WELL-R-10",
+    "document_type": "Drilling Report",
+    "date": "2023-05-15",
+    "depth_interval": "3000m - 3300m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-R-10 covering section operations and parameters.",
+    "file_size_kb": 420,
+    "page_count": 3,
+    "extracted_parameters": {
+      "well": "WELL-R-10",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3200m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-R-10\n========================================================================================\nRoutine operational log for synthetic offset well WELL-R-10 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-041",
+    "document_name": "DDR-2024-041_WELL-R-10_Operational_Log.pdf",
+    "well_id": "WELL-R-10",
+    "document_type": "DDR",
+    "date": "2024-06-15",
+    "depth_interval": "3040m - 3340m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-R-10 covering section operations and parameters.",
+    "file_size_kb": 426,
+    "page_count": 4,
+    "extracted_parameters": {
+      "well": "WELL-R-10",
+      "report_type": "DDR",
+      "monitored_depth": "3230m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-R-10\n========================================================================================\nRoutine operational log for synthetic offset well WELL-R-10 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-042",
+    "document_name": "DDR-2024-042_WELL-S-07_Operational_Log.pdf",
+    "well_id": "WELL-S-07",
+    "document_type": "DDR",
+    "date": "2023-07-15",
+    "depth_interval": "3080m - 3380m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-S-07 covering section operations and parameters.",
+    "file_size_kb": 432,
+    "page_count": 5,
+    "extracted_parameters": {
+      "well": "WELL-S-07",
+      "report_type": "DDR",
+      "monitored_depth": "3260m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-S-07\n========================================================================================\nRoutine operational log for synthetic offset well WELL-S-07 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-043",
+    "document_name": "CAS-2024-043_WELL-S-07_Operational_Log.pdf",
+    "well_id": "WELL-S-07",
+    "document_type": "Casing Report",
+    "date": "2024-08-15",
+    "depth_interval": "3120m - 3420m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-S-07 covering section operations and parameters.",
+    "file_size_kb": 438,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-S-07",
+      "report_type": "Casing Report",
+      "monitored_depth": "3290m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-S-07\n========================================================================================\nRoutine operational log for synthetic offset well WELL-S-07 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-CAS-SYN-044",
+    "document_name": "CAS-2024-044_WELL-T-16_Operational_Log.pdf",
+    "well_id": "WELL-T-16",
+    "document_type": "Casing Report",
+    "date": "2023-09-15",
+    "depth_interval": "3160m - 3460m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Casing Report report for synthetic offset well WELL-T-16 covering section operations and parameters.",
+    "file_size_kb": 444,
+    "page_count": 7,
+    "extracted_parameters": {
+      "well": "WELL-T-16",
+      "report_type": "Casing Report",
+      "monitored_depth": "3320m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Casing Report | WELL: WELL-T-16\n========================================================================================\nRoutine operational log for synthetic offset well WELL-T-16 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-045",
+    "document_name": "DRI-2024-045_WELL-T-16_Operational_Log.pdf",
+    "well_id": "WELL-T-16",
+    "document_type": "Drilling Report",
+    "date": "2024-10-15",
+    "depth_interval": "3200m - 3500m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-T-16 covering section operations and parameters.",
+    "file_size_kb": 450,
+    "page_count": 3,
+    "extracted_parameters": {
+      "well": "WELL-T-16",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3350m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-T-16\n========================================================================================\nRoutine operational log for synthetic offset well WELL-T-16 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DRI-SYN-046",
+    "document_name": "DRI-2024-046_WELL-V-01_Operational_Log.pdf",
+    "well_id": "WELL-V-01",
+    "document_type": "Drilling Report",
+    "date": "2023-11-15",
+    "depth_interval": "3240m - 3540m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical Drilling Report report for synthetic offset well WELL-V-01 covering section operations and parameters.",
+    "file_size_kb": 456,
+    "page_count": 4,
+    "extracted_parameters": {
+      "well": "WELL-V-01",
+      "report_type": "Drilling Report",
+      "monitored_depth": "3380m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: Drilling Report | WELL: WELL-V-01\n========================================================================================\nRoutine operational log for synthetic offset well WELL-V-01 recording drilling parameters,\nlithological evaluation, and telemetry through Jaintia Limestone / ABC Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-047",
+    "document_name": "DDR-2024-047_WELL-V-01_Operational_Log.pdf",
+    "well_id": "WELL-V-01",
+    "document_type": "DDR",
+    "date": "2024-12-15",
+    "depth_interval": "3280m - 3580m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-V-01 covering section operations and parameters.",
+    "file_size_kb": 462,
+    "page_count": 5,
+    "extracted_parameters": {
+      "well": "WELL-V-01",
+      "report_type": "DDR",
+      "monitored_depth": "3410m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-V-01\n========================================================================================\nRoutine operational log for synthetic offset well WELL-V-01 recording drilling parameters,\nlithological evaluation, and telemetry through Jaintia Limestone / ABC Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  },
+  {
+    "id": "DOC-DDR-SYN-048",
+    "document_name": "DDR-2024-048_WELL-W-13_Operational_Log.pdf",
+    "well_id": "WELL-W-13",
+    "document_type": "DDR",
+    "date": "2023-01-15",
+    "depth_interval": "3320m - 3620m",
+    "processed": true,
+    "source_type": "Synthetic Demonstration Document",
+    "summary": "Historical DDR report for synthetic offset well WELL-W-13 covering section operations and parameters.",
+    "file_size_kb": 468,
+    "page_count": 6,
+    "extracted_parameters": {
+      "well": "WELL-W-13",
+      "report_type": "DDR",
+      "monitored_depth": "3440m",
+      "status": "Verified synthetic historical record"
+    },
+    "content_text": "\n========================================================================================\n[SYNTHETIC DEMONSTRATION DOCUMENT - NOT ACTUAL OIL INDIA LIMITED DATA]\nOPERATIONAL REPORT: DDR | WELL: WELL-W-13\n========================================================================================\nRoutine operational log for synthetic offset well WELL-W-13 recording drilling parameters,\nlithological evaluation, and telemetry through Barail Sandstone / XYZ Formation.\nAll operational limits maintained within synthetic tolerance standards.\n            "
+  }
+]

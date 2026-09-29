@@ -1,0 +1,83 @@
+{
+  "engine_name": "Multi-Factor Spatial-Stratigraphic Risk Signal Engine",
+  "version": "1.1-SIH26121",
+  "status_levels": [
+    "NORMAL",
+    "WATCH",
+    "REVIEW REQUIRED"
+  ],
+  "categories": [
+    {
+      "name": "Mud Loss",
+      "keywords": [
+        "Mud Loss",
+        "Lost Circulation",
+        "Seepage",
+        "Thief Zone"
+      ]
+    },
+    {
+      "name": "Kick / Gas Influx",
+      "keywords": [
+        "Kick",
+        "Gas Influx",
+        "Gas",
+        "Flow",
+        "Well Control"
+      ]
+    },
+    {
+      "name": "Stuck Pipe",
+      "keywords": [
+        "Stuck Pipe",
+        "Differential Sticking",
+        "Overpull",
+        "Jarring"
+      ]
+    },
+    {
+      "name": "Torque / Drag",
+      "keywords": [
+        "Torque",
+        "Drag",
+        "Stick-Slip",
+        "Tight Hole",
+        "Vibration"
+      ]
+    },
+    {
+      "name": "Casing & Shoe Integrity",
+      "keywords": [
+        "Casing",
+        "Shoe",
+        "FIT",
+        "LOT",
+        "Wear"
+      ]
+    },
+    {
+      "name": "Cementing Quality",
+      "keywords": [
+        "Cementing",
+        "Channeling",
+        "Micro-Annulus",
+        "Squeeze"
+      ]
+    },
+    {
+      "name": "Formation & Instability Risk",
+      "keywords": [
+        "Instability",
+        "Cavings",
+        "Washout",
+        "Pack-Off",
+        "Breakout"
+      ]
+    }
+  ],
+  "similarity_weights": {
+    "distance": 0.45,
+    "formation_match": 0.35,
+    "depth_proximity": 0.2
+  }
+}

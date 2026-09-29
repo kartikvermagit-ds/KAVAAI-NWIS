@@ -1,5 +1,5 @@
 from typing import List, Dict, Any
-from .database import get_active_well, get_all_wells, get_all_events, get_all_formations
+from .database import get_active_well, get_all_wells, get_all_events
 
 def evaluate_risks(active_well_id: str = "WELL-A-01", depth_tolerance_m: float = 150.0, max_radius_km: float = 10.0) -> List[Dict[str, Any]]:
     active_well = get_active_well()
@@ -30,7 +30,7 @@ def evaluate_risks(active_well_id: str = "WELL-A-01", depth_tolerance_m: float =
         # Match events
         matching_events = []
         for ev in events:
-            # Skip self
+            # Skip active well self
             if ev["well_id"] == active_well_id:
                 continue
                 
@@ -38,20 +38,15 @@ def evaluate_risks(active_well_id: str = "WELL-A-01", depth_tolerance_m: float =
             if not w:
                 continue
                 
-            # Filter by radius
             dist = w.get("distance_km", 999.0)
             if dist > max_radius_km:
                 continue
                 
-            # Filter by event keyword
             is_type_match = any(kw.lower() in ev["event_type"].lower() or kw.lower() in ev["description"].lower() for kw in keywords)
             if not is_type_match:
                 continue
                 
-            # Calculate depth delta
             depth_delta = abs(ev["depth"] - current_depth)
-            
-            # Check formation alignment or depth proximity
             same_formation = (ev["formation"].strip().lower() == current_formation.strip().lower())
             within_depth = (depth_delta <= depth_tolerance_m)
             
@@ -64,7 +59,6 @@ def evaluate_risks(active_well_id: str = "WELL-A-01", depth_tolerance_m: float =
                     "dist": dist
                 })
                 
-        # Calculate transparent score
         evidence_count = len(matching_events)
         unique_wells = list({item["well"]["id"] for item in matching_events})
         evidence_docs = list({item["event"]["document_id"] for item in matching_events if item["event"].get("document_id")})
@@ -76,8 +70,6 @@ def evaluate_risks(active_well_id: str = "WELL-A-01", depth_tolerance_m: float =
             interval_str = f"{current_depth - 100:.0f}m - {current_depth + 100:.0f}m"
             rec = "Historical logs indicate nominal background operations in offset wells. Continue standard surveillance."
         else:
-            # Transparent weighting formula
-            # Factors: Proximity (0-30), Depth correlation (0-30), Formation match (0-20), Event severity (0-20)
             closest_dist = min(item["dist"] for item in matching_events)
             min_depth_delta = min(item["depth_delta"] for item in matching_events)
             
@@ -96,29 +88,28 @@ def evaluate_risks(active_well_id: str = "WELL-A-01", depth_tolerance_m: float =
                 elif sev == "MEDIUM" and max_sev != "HIGH":
                     max_sev = "MEDIUM"
                     
-            sev_weights = {"CRITICAL": 20.0, "HIGH": 17.0, "MEDIUM": 12.0, "LOW": 6.0}
+            sev_weights = {"CRITICAL": 20.0, "HIGH": 16.0, "MEDIUM": 11.0, "LOW": 5.0}
             sev_factor = sev_weights.get(max_sev, 10.0)
+            well_bonus = min(10.0, len(unique_wells) * 3.5)
             
-            # Well count bonus (+5 per supporting well up to 10)
-            well_bonus = min(10.0, len(unique_wells) * 4.0)
+            risk_score = round(min(92.0, dist_factor + depth_factor + fmt_factor + sev_factor + well_bonus), 1)
             
-            risk_score = round(min(98.0, dist_factor + depth_factor + fmt_factor + sev_factor + well_bonus), 1)
-            
-            if risk_score >= 75.0 or max_sev in ["CRITICAL", "HIGH"]:
-                status = "WATCH" if risk_score < 85 else "ELEVATED"
-                severity = "High" if risk_score >= 80 else "Medium"
+            # Status levels: NORMAL, WATCH, REVIEW REQUIRED (per Section 9)
+            if risk_score >= 78.0 or max_sev in ["CRITICAL", "HIGH"]:
+                status = "WATCH"
+                severity = "Medium" if risk_score < 85 else "Watch Alert"
             elif risk_score >= 50.0:
-                status = "MONITOR"
+                status = "WATCH"
                 severity = "Medium"
             else:
-                status = "MONITOR"
+                status = "NORMAL"
                 severity = "Low"
                 
             min_ev_depth = min(item["event"]["depth"] for item in matching_events)
             max_ev_depth = max(item["event"]["depth"] for item in matching_events)
             interval_str = f"{min(min_ev_depth, current_depth - 40):.0f}m - {max(max_ev_depth, current_depth + 50):.0f}m"
             
-            rec = f"Historical pattern detected across {len(unique_wells)} offset wells within {closest_dist:.1f}km. Engineer review required before proceeding through the comparable {interval_str} interval."
+            rec = f"Historical pattern detected across {len(unique_wells)} synthetic offset wells within {closest_dist:.1f}km. Review linked reports and formation comparison before proceeding through the comparable {interval_str} interval."
             
         factors = {
             "closest_offset_distance_km": round(min(item["dist"] for item in matching_events), 2) if matching_events else None,
@@ -126,7 +117,7 @@ def evaluate_risks(active_well_id: str = "WELL-A-01", depth_tolerance_m: float =
             "formation_matched": any(item["same_formation"] for item in matching_events),
             "supporting_wells_count": len(unique_wells),
             "historical_event_count": evidence_count,
-            "algorithm": "Multi-Criteria Transparent Spatial-Stratigraphic Risk Engine (v1.0-SIH26121)"
+            "algorithm": "Deterministic Spatial-Stratigraphic Risk Signal Engine (SIH26121)"
         }
         
         risk_results.append({
@@ -142,6 +133,5 @@ def evaluate_risks(active_well_id: str = "WELL-A-01", depth_tolerance_m: float =
             "recommendation": rec
         })
         
-    # Sort by risk score descending
     risk_results.sort(key=lambda x: x["risk_score"], reverse=True)
     return risk_results

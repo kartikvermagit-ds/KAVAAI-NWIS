@@ -57,21 +57,15 @@ def get_dashboard_summary():
     all_docs = get_all_documents()
     risks = evaluate_risks()
     
-    # Calculate top active risk level
-    top_risk_level = "LOW"
-    for r in risks:
-        if r["severity"] == "High" or r["status"] in ["WATCH", "ELEVATED", "CRITICAL"]:
-            top_risk_level = "HIGH"
-            break
-        elif r["severity"] == "Medium" and top_risk_level != "HIGH":
-            top_risk_level = "MEDIUM"
+    # Active risk signal: WATCH per SIH26121 Section 4 & 9
+    top_risk_level = "WATCH"
 
     recent_events = all_events[:6]
     top_nearby = nearby_wells[:6]
     
     ai_highlight = (
-        "Three nearby wells contain historical events in intervals comparable to the current drilling depth. "
-        "WELL-B-03 recorded a mud-loss event in a similar formation at 3,440m."
+        "Three nearby synthetic wells contain historical events in intervals comparable to the current drilling depth. "
+        "WELL-B-03 recorded a mud-loss event at approximately 3,440 m in a comparable formation."
     )
     
     return {
@@ -84,7 +78,7 @@ def get_dashboard_summary():
         "top_nearby_wells": top_nearby,
         "ai_highlight": ai_highlight,
         "risks_overview": risks[:4],
-        "dataset_disclaimer": "Synthetic Demonstration Dataset - SIH26121 Hackathon Prototype"
+        "dataset_disclaimer": "Synthetic Demonstration Dataset — Simulated drilling data for SIH 2026. No proprietary OIL data."
     }
 
 @app.get("/api/wells")

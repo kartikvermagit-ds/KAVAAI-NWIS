@@ -32,48 +32,48 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
   const currentDepth = activeWell?.current_depth || 3420;
   const currentFmtName = activeWell?.formation || 'Barail Sandstone / XYZ Formation';
 
-  // Key offset comparison wells matching Section 10
+  // Key offset comparison wells matching Section 7 and 10
   const comparisonOffsetWells = [
     {
       id: 'WELL-B-03',
       name: 'Offset Appraisal Well B-03',
-      distance_km: 2.8,
+      distance_km: 2.69,
       eventDepth: 3440,
       formation: 'Barail Sandstone / XYZ Formation',
       event: 'Mud Loss (48 bbl/hr)',
       severity: 'HIGH',
-      similarity: 92,
+      similarity: 91,
       docId: 'DOC-DDR-2024-017',
       deltaMeters: 20
     },
     {
       id: 'WELL-C-07',
       name: 'Offset Development Well C-07',
-      distance_km: 4.1,
+      distance_km: 3.95,
       eventDepth: 3390,
       formation: 'Barail Sandstone / XYZ Formation',
       event: 'Torque Surge (28.2 kft-lbs)',
       severity: 'MEDIUM',
-      similarity: 88,
+      similarity: 87,
       docId: 'DOC-DDR-2023-112',
       deltaMeters: -30
     },
     {
       id: 'WELL-E-11',
       name: 'Offset Delineation Well E-11',
-      distance_km: 3.5,
+      distance_km: 3.10,
       eventDepth: 3460,
       formation: 'Barail Sandstone / XYZ Formation',
       event: 'Total Mud Loss (85 bbl)',
       severity: 'HIGH',
-      similarity: 86,
+      similarity: 90,
       docId: 'DOC-DDR-2024-045',
       deltaMeters: 40
     },
     {
       id: 'WELL-D-02',
       name: 'Deep Exploration D-02',
-      distance_km: 5.2,
+      distance_km: 5.20,
       eventDepth: 3610,
       formation: 'Jaintia Limestone / ABC Formation',
       event: 'Stuck Pipe (120 klbs Overpull)',

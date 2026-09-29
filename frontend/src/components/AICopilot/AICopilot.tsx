@@ -36,7 +36,7 @@ export const AICopilot: React.FC<AICopilotProps> = ({ activeWell, onNavigate }) 
         }
       ],
       evidence_documents: ["DOC-DDR-2024-017", "DOC-DDR-2023-112"],
-      engineer_note: "AI-generated summary. Verify against source documents. Human-in-the-loop validation required.",
+      engineer_note: "AI-assisted summary — verify against source reports.",
       confidence_factors: {
         spatial_correlation: 0.92,
         stratigraphic_match: 0.98,
@@ -60,10 +60,10 @@ export const AICopilot: React.FC<AICopilotProps> = ({ activeWell, onNavigate }) 
   ]);
 
   const suggestedQuestions = [
-    "What happened in nearby wells around 3400m?",
-    "Show historical mud-loss events in XYZ formation.",
-    "Which nearby wells had stuck pipe?",
-    "What reports support the current risk alert?",
+    "What happened around 3400 m in nearby wells?",
+    "Show mud-loss events in this formation.",
+    "Which nearby wells have similar drilling conditions?",
+    "What reports support the current watch signal?",
     "Compare WELL-B-03 with the current well."
   ];
 

@@ -36,12 +36,12 @@ export const RiskDashboard: React.FC<RiskDashboardProps> = ({ activeWell, onNavi
         <div>
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold font-mono text-white">Risk Intelligence & Decision Support</h1>
-            <span className="text-xs bg-red-950 text-red-300 font-mono px-2 py-0.5 rounded border border-red-700/50">
-              Explainable Risk Engine v1.0
+            <span className="text-xs bg-amber-950 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-700/50">
+              CURRENT RISK SIGNAL: WATCH
             </span>
           </div>
           <p className="text-sm text-slate-400 mt-1">
-            Dynamic spatial-stratigraphic hazard scoring correlating nearby well incident reports
+            Historical mud-loss / torque events found in comparable intervals across synthetic offset wells
           </p>
         </div>
 
