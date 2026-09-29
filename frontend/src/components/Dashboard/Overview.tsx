@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { DashboardSummary, Well } from '../../types';
 import { BrandLogo } from '../Common/BrandLogo';
+import { RotatingGlobeBackdrop } from './RotatingGlobeBackdrop';
 
 interface OverviewProps {
   summary: DashboardSummary | null;
@@ -92,9 +93,12 @@ export const Overview: React.FC<OverviewProps> = ({ summary, loading, onNavigate
   ];
 
   return (
-    <div className="flex-1 p-6 space-y-6 overflow-y-auto max-w-[1600px] mx-auto">
+    <div className="flex-1 p-6 space-y-6 overflow-y-auto max-w-[1600px] mx-auto relative">
+      {/* 3D Green Rotating Half-Globe Telemetry Backdrop */}
+      <RotatingGlobeBackdrop />
+
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#182944] gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#182944] gap-4 relative z-10">
         <div className="flex items-center space-x-3.5">
           <BrandLogo size="lg" />
         </div>
@@ -117,8 +121,10 @@ export const Overview: React.FC<OverviewProps> = ({ summary, loading, onNavigate
         </div>
       </div>
 
-      {/* Synthetic Dataset Alert Banner (Section 3) */}
-      <div className="bg-slate-900/90 border border-slate-700/70 rounded-lg px-4 py-2.5 flex items-center justify-between text-xs text-slate-300 shadow-sm">
+      {/* Rest of Dashboard Content */}
+      <div className="space-y-6 relative z-10">
+        {/* Synthetic Dataset Alert Banner (Section 3) */}
+        <div className="bg-slate-900/90 border border-slate-700/70 rounded-lg px-4 py-2.5 flex items-center justify-between text-xs text-slate-300 shadow-sm">
         <div className="flex items-center space-x-2">
           <span className="w-2 h-2 rounded-full bg-blue-400"></span>
           <span className="font-mono text-slate-200 font-semibold">Synthetic Demonstration Dataset</span>
@@ -534,5 +540,6 @@ export const Overview: React.FC<OverviewProps> = ({ summary, loading, onNavigate
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
