@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { BrandLogo } from '../Common/BrandLogo';
 import { DrillingSimulationBackdrop } from './DrillingSimulationBackdrop';
+import { NavbarLiveSimulation } from './NavbarLiveSimulation';
 
 interface HomePageProps {
   onEnterLogin: () => void;
@@ -54,20 +55,16 @@ export const HomePage: React.FC<HomePageProps> = ({
       <DrillingSimulationBackdrop />
 
       {/* Top Engineering Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-[#071321]/90 backdrop-blur-md border-b border-[#123A5A]/80 px-4 sm:px-8 py-3.5">
+      <header className="sticky top-0 z-40 bg-[#071321]/90 backdrop-blur-md border-b border-[#123A5A]/80 px-4 sm:px-8 py-3 relative overflow-hidden">
+        {/* Continuous Laser Runner along bottom border */}
+        <div className="absolute bottom-0 left-0 h-[2px] w-48 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-laser-runner pointer-events-none" />
+
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo & Product Title */}
           <BrandLogo size="md" />
 
-          {/* Quick Status Pill */}
-          <div className="hidden lg:flex items-center space-x-4 bg-[#0a1b2d] px-3.5 py-1.5 rounded-lg border border-[#143354] font-mono text-[11px]">
-            <div className="flex items-center space-x-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
-              <span className="text-slate-300">NODE: LOCAL-01</span>
-            </div>
-            <div className="h-3 w-[1px] bg-slate-700" />
-            <span className="text-cyan-400">DATASET: SYNTHETIC BENCHMARK</span>
-          </div>
+          {/* Continuous Real-time MWD & Drilling Telemetry Simulation */}
+          <NavbarLiveSimulation />
 
           {/* Action CTAs */}
           <div className="flex items-center space-x-3">

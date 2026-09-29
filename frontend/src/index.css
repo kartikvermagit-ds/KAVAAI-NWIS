@@ -82,6 +82,16 @@ body {
   animation: marker-radar 2.2s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
 }
 
+/* Continuous Navbar Laser Stream */
+@keyframes laser-runner {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(1200%); }
+}
+
+.animate-laser-runner {
+  animation: laser-runner 5s linear infinite;
+}
+
 /* Engineering badge pulse */
 @keyframes soft-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
