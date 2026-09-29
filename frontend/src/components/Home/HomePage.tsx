@@ -17,6 +17,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { BrandLogo } from '../Common/BrandLogo';
+import { DrillingSimulationBackdrop } from './DrillingSimulationBackdrop';
 
 interface HomePageProps {
   onEnterLogin: () => void;
@@ -48,6 +49,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           background: 'radial-gradient(circle at 50% 15%, rgba(14, 55, 95, 0.28) 0%, transparent 65%)',
         }}
       />
+
+      {/* 10-Second Problem Statement Geological Drilling & Offset Correlation Simulation Backdrop */}
+      <DrillingSimulationBackdrop />
 
       {/* Top Engineering Navigation Bar */}
       <header className="sticky top-0 z-40 bg-[#071321]/90 backdrop-blur-md border-b border-[#123A5A]/80 px-4 sm:px-8 py-3.5">
