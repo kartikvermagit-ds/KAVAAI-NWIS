@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import {
   Compass, Eye, FileText, Filter, Layers, MapPin,
-  Search, Shield, Sliders, AlertTriangle
+  Search, Shield, Sliders, AlertTriangle, Crosshair,
+  Radio, Globe, Satellite, Maximize2, RotateCcw
 } from 'lucide-react';
 import { Well } from '../../types';
 
@@ -13,39 +14,67 @@ interface WellMapProps {
   onNavigate: (view: string, targetId?: string) => void;
 }
 
-// Custom modern SVG icons for wells
-const createWellIcon = (isActive: boolean, hasCriticalRisk: boolean, isSelected: boolean) => {
-  const bgColor = isActive
-    ? '#10b981' // emerald
-    : hasCriticalRisk
-    ? '#ef4444' // red
-    : '#3b82f6'; // blue
+// Map recentering helper component
+const MapRecenterController: React.FC<{ center: [number, number]; zoom: number; trigger: number }> = ({
+  center,
+  zoom,
+  trigger
+}) => {
+  const map = useMap();
+  React.useEffect(() => {
+    map.flyTo(center, zoom, { duration: 1.2 });
+  }, [trigger, center, zoom, map]);
+  return null;
+};
 
-  const borderColor = isSelected ? '#fbbf24' : '#ffffff';
-  const size = isActive ? 34 : isSelected ? 32 : 26;
+// Custom tactical SVG icons for wells
+const createTacticalWellIcon = (
+  wellId: string,
+  isActive: boolean,
+  hasCriticalRisk: boolean,
+  isSelected: boolean
+) => {
+  const size = isActive ? 36 : isSelected ? 32 : 24;
 
-  const html = `
-    <div style="
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: ${size}px;
-      height: ${size}px;
-      background: ${bgColor};
-      border: 2px solid ${borderColor};
-      border-radius: 50%;
-      box-shadow: 0 0 12px ${bgColor}99;
-      cursor: pointer;
-    ">
-      ${isActive ? '<div style="width: 8px; height: 8px; background: #ffffff; border-radius: 50%;"></div>' : ''}
-      ${isActive ? '<span style="position: absolute; top: -18px; background: #064e3b; color: #6ee7b7; font-size: 9px; font-weight: bold; padding: 1px 4px; border-radius: 3px; border: 1px solid #059669; font-family: monospace;">TARGET</span>' : ''}
-    </div>
-  `;
+  let markerContent = '';
+
+  if (isActive) {
+    markerContent = `
+      <div style="position: relative; display: flex; align-items: center; justify-content: center; width: ${size}px; height: ${size}px; cursor: pointer;">
+        <div style="position: absolute; width: 44px; height: 44px; border: 2px solid #10b981; border-radius: 50%; opacity: 0.8;" class="animate-marker-radar"></div>
+        <div style="width: 24px; height: 24px; background: linear-gradient(135deg, #059669, #10b981); border: 2px solid #a7f3d0; border-radius: 50%; box-shadow: 0 0 18px rgba(16,185,129,0.9); display: flex; align-items: center; justify-content: center;">
+          <div style="width: 8px; height: 8px; background: #ffffff; border-radius: 50%;"></div>
+        </div>
+        <div style="position: absolute; top: -24px; white-space: nowrap; background: rgba(6,78,59,0.95); color: #6ee7b7; border: 1px solid #10b981; font-family: monospace; font-size: 10px; font-weight: bold; padding: 2px 7px; border-radius: 4px; box-shadow: 0 0 10px rgba(16,185,129,0.6);">
+          TARGET: ${wellId}
+        </div>
+      </div>
+    `;
+  } else if (hasCriticalRisk) {
+    markerContent = `
+      <div style="position: relative; display: flex; align-items: center; justify-content: center; width: ${size}px; height: ${size}px; cursor: pointer;">
+        <div style="position: absolute; width: 38px; height: 38px; border: 2px solid #ef4444; border-radius: 50%; opacity: 0.7;" class="animate-ping"></div>
+        <div style="width: 22px; height: 22px; background: linear-gradient(135deg, #b91c1c, #ef4444); border: 2px solid ${isSelected ? '#fbbf24' : '#fecaca'}; border-radius: 50%; box-shadow: 0 0 14px rgba(239,68,68,0.9); display: flex; align-items: center; justify-content: center;">
+          <div style="width: 6px; height: 6px; background: #ffffff; border-radius: 50%;"></div>
+        </div>
+        <div style="position: absolute; top: -20px; white-space: nowrap; background: rgba(127,29,29,0.95); color: #fca5a5; border: 1px solid #ef4444; font-family: monospace; font-size: 9px; font-weight: bold; padding: 1px 5px; border-radius: 4px; box-shadow: 0 0 8px rgba(239,68,68,0.6);">
+          HAZARD
+        </div>
+      </div>
+    `;
+  } else {
+    markerContent = `
+      <div style="position: relative; display: flex; align-items: center; justify-content: center; width: ${size}px; height: ${size}px; cursor: pointer;">
+        <div style="width: 18px; height: 18px; background: linear-gradient(135deg, #0284c7, #38bdf8); border: 2px solid ${isSelected ? '#fbbf24' : '#bae6fd'}; border-radius: 50%; box-shadow: 0 0 10px rgba(56,189,248,0.7); display: flex; align-items: center; justify-content: center;">
+          <div style="width: 4px; height: 4px; background: #ffffff; border-radius: 50%;"></div>
+        </div>
+      </div>
+    `;
+  }
 
   return L.divIcon({
-    html,
-    className: 'custom-well-marker',
+    html: markerContent,
+    className: 'tactical-well-marker',
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
     popupAnchor: [0, -size / 2]
@@ -60,10 +89,14 @@ export const WellMap: React.FC<WellMapProps> = ({ wells, activeWell, onNavigate 
   const [eventFilter, setEventFilter] = useState('ALL');
   const [showCircles, setShowCircles] = useState(true);
 
+  // Basemap style toggle: 'tactical' (dark GIS) | 'satellite' (high-res earth) | 'cyber' (deep navy grid)
+  const [mapStyle, setMapStyle] = useState<'tactical' | 'satellite' | 'cyber'>('tactical');
+  const [recenterCount, setRecenterCount] = useState(0);
+
   const centerLat = activeWell ? activeWell.latitude : 27.5015;
   const centerLon = activeWell ? activeWell.longitude : 95.3540;
 
-  // Filter wells
+  // Filter wells based on search, radius, formation, and historical event filters
   const filteredWells = useMemo(() => {
     return wells.filter((w) => {
       if (searchQuery) {
@@ -90,124 +123,246 @@ export const WellMap: React.FC<WellMapProps> = ({ wells, activeWell, onNavigate 
     });
   }, [wells, searchQuery, radiusFilter, formationFilter, eventFilter]);
 
+  // Determine basemap configuration without API keys or watermarks
+  const basemapConfig = useMemo(() => {
+    if (mapStyle === 'satellite') {
+      return {
+        url: 'https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        className: 'satellite-tiles',
+        attribution: '&copy; Esri, Maxar, Earthstar Geographics | KAVAAI-NWIS'
+      };
+    }
+    if (mapStyle === 'cyber') {
+      return {
+        url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        className: 'cyber-grid-tiles',
+        attribution: '&copy; OpenStreetMap | KAVAAI Cyber Grid'
+      };
+    }
+    // Default 'tactical' dark GIS
+    return {
+      url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      className: 'tactical-dark-tiles',
+      attribution: '&copy; OpenStreetMap contributors | KAVAAI-NWIS GIS'
+    };
+  }, [mapStyle]);
+
+  const handleRecenter = () => {
+    setRecenterCount((prev) => prev + 1);
+  };
+
   return (
-    <div className="flex-1 flex flex-col h-[calc(100vh-4rem)] overflow-hidden bg-[#060e19]">
+    <div className="flex-1 flex flex-col h-[calc(100vh-4rem)] overflow-hidden bg-[#040a14] relative">
       {/* Map Control Toolbar */}
-      <div className="bg-[#081525] border-b border-[#182944] px-5 py-3 flex flex-wrap items-center justify-between gap-3 z-10 shadow-sm">
+      <div className="bg-[#071322] border-b border-[#142d4a] px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 z-20 shadow-md">
         <div className="flex items-center space-x-3 flex-wrap gap-2">
           {/* Search */}
           <div className="relative">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-cyan-400 absolute left-2.5 top-2.5" />
             <input
               type="text"
-              placeholder="Search well ID (e.g. WELL-B-03)..."
+              placeholder="Search well ID (e.g. WELL-B)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-[#0d1d33] border border-[#1d3353] rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 w-56 font-mono"
+              className="bg-[#050f1d] border border-[#143354] rounded-lg pl-8 pr-3 py-1.5 text-xs font-mono text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 w-52"
             />
           </div>
 
           {/* Radius Filter */}
-          <div className="flex items-center space-x-1.5 bg-[#0d1d33] px-2.5 py-1.5 rounded-lg border border-[#1d3353] text-xs">
-            <span className="text-slate-400 text-[11px] font-mono">Radius:</span>
+          <div className="flex items-center space-x-1.5 bg-[#050f1d] px-2.5 py-1 rounded-lg border border-[#143354] text-xs">
+            <Filter className="w-3 h-3 text-cyan-400" />
+            <span className="text-[11px] font-mono text-slate-400">Radius:</span>
             <select
               value={radiusFilter}
               onChange={(e) => setRadiusFilter(Number(e.target.value))}
-              className="bg-transparent text-blue-400 font-mono font-semibold focus:outline-none cursor-pointer"
+              className="bg-transparent text-cyan-300 font-mono text-xs focus:outline-none cursor-pointer"
             >
-              <option value={3} className="bg-[#0d1d33] text-slate-200">3 km</option>
-              <option value={5} className="bg-[#0d1d33] text-slate-200">5 km</option>
-              <option value={10} className="bg-[#0d1d33] text-slate-200">10 km</option>
-              <option value={15} className="bg-[#0d1d33] text-slate-200">15 km</option>
-              <option value={99} className="bg-[#0d1d33] text-slate-200">All Basin</option>
+              <option value={5} className="bg-[#071322] text-slate-200">5 km</option>
+              <option value={10} className="bg-[#071322] text-slate-200">10 km</option>
+              <option value={15} className="bg-[#071322] text-slate-200">15 km</option>
+              <option value={25} className="bg-[#071322] text-slate-200">25 km</option>
+              <option value={99} className="bg-[#071322] text-slate-200">All Wells</option>
             </select>
           </div>
 
           {/* Formation Filter */}
-          <div className="flex items-center space-x-1.5 bg-[#0d1d33] px-2.5 py-1.5 rounded-lg border border-[#1d3353] text-xs">
-            <span className="text-slate-400 text-[11px] font-mono">Formation:</span>
+          <div className="flex items-center space-x-1.5 bg-[#050f1d] px-2.5 py-1 rounded-lg border border-[#143354] text-xs">
+            <Layers className="w-3 h-3 text-amber-400" />
+            <span className="text-[11px] font-mono text-slate-400">Formation:</span>
             <select
               value={formationFilter}
               onChange={(e) => setFormationFilter(e.target.value)}
-              className="bg-transparent text-amber-400 font-mono font-semibold focus:outline-none cursor-pointer"
+              className="bg-transparent text-amber-300 font-mono text-xs focus:outline-none cursor-pointer max-w-[140px] truncate"
             >
-              <option value="ALL" className="bg-[#0d1d33] text-slate-200">All Formations</option>
-              <option value="Barail" className="bg-[#0d1d33] text-slate-200">Barail Sandstone / XYZ</option>
-              <option value="Kopili" className="bg-[#0d1d33] text-slate-200">Kopili Shale</option>
-              <option value="Jaintia" className="bg-[#0d1d33] text-slate-200">Jaintia Limestone / ABC</option>
+              <option value="ALL" className="bg-[#071322] text-slate-200">All Formations</option>
+              <option value="Barail" className="bg-[#071322] text-slate-200">Barail Sandstone</option>
+              <option value="Tipam" className="bg-[#071322] text-slate-200">Tipam Sandstone</option>
+              <option value="Kopili" className="bg-[#071322] text-slate-200">Kopili Shale</option>
+              <option value="Girujan" className="bg-[#071322] text-slate-200">Girujan Clay</option>
             </select>
           </div>
 
-          {/* Event Filter */}
-          <div className="flex items-center space-x-1.5 bg-[#0d1d33] px-2.5 py-1.5 rounded-lg border border-[#1d3353] text-xs">
-            <span className="text-slate-400 text-[11px] font-mono">Incident Filter:</span>
+          {/* Hazard Filter */}
+          <div className="flex items-center space-x-1.5 bg-[#050f1d] px-2.5 py-1 rounded-lg border border-[#143354] text-xs">
+            <AlertTriangle className="w-3 h-3 text-red-400" />
+            <span className="text-[11px] font-mono text-slate-400">Incidents:</span>
             <select
               value={eventFilter}
               onChange={(e) => setEventFilter(e.target.value)}
-              className="bg-transparent text-red-400 font-mono font-semibold focus:outline-none cursor-pointer"
+              className="bg-transparent text-red-300 font-mono text-xs focus:outline-none cursor-pointer"
             >
-              <option value="ALL" className="bg-[#0d1d33] text-slate-200">All Events</option>
-              <option value="MUD_LOSS" className="bg-[#0d1d33] text-slate-200">Mud Loss Events</option>
-              <option value="TORQUE" className="bg-[#0d1d33] text-slate-200">Torque Surges</option>
-              <option value="STUCK_PIPE" className="bg-[#0d1d33] text-slate-200">Stuck Pipe</option>
+              <option value="ALL" className="bg-[#071322] text-slate-200">All Events</option>
+              <option value="MUD_LOSS" className="bg-[#071322] text-slate-200">Mud Losses</option>
+              <option value="TORQUE" className="bg-[#071322] text-slate-200">Torque Surges</option>
+              <option value="STUCK_PIPE" className="bg-[#071322] text-slate-200">Stuck Pipe</option>
             </select>
           </div>
 
-          <label className="flex items-center space-x-1.5 text-xs text-slate-300 cursor-pointer select-none pl-2">
+          {/* Distance Rings Toggle */}
+          <label className="flex items-center space-x-1.5 text-xs text-slate-300 cursor-pointer select-none pl-1">
             <input
               type="checkbox"
               checked={showCircles}
               onChange={(e) => setShowCircles(e.target.checked)}
-              className="rounded bg-slate-900 border-slate-700 text-blue-600 focus:ring-0"
+              className="rounded bg-[#050f1d] border-[#143354] text-cyan-500 focus:ring-0"
             />
-            <span className="text-[11px] font-mono text-slate-400">Distance Rings</span>
+            <span className="text-[11px] font-mono text-slate-400">Range Rings</span>
           </label>
         </div>
 
-        <div className="flex items-center space-x-3 text-xs">
-          <span className="text-slate-400 font-mono text-[11px]">
-            Visible: <strong className="text-white font-bold">{filteredWells.length}</strong> / {wells.length} wells
-          </span>
-          <div className="bg-slate-900/90 text-slate-400 text-[11px] font-mono px-2 py-0.5 rounded border border-slate-800 flex items-center gap-1">
-            <Shield className="w-3 h-3 text-blue-400" />
-            <span>Synthetic Demo Grid</span>
+        {/* Right Controls: Basemap Modes & Stats */}
+        <div className="flex items-center space-x-3">
+          {/* Basemap Switcher */}
+          <div className="flex items-center bg-[#050f1d] p-0.5 rounded-lg border border-[#143354] font-mono text-[10px]">
+            <button
+              onClick={() => setMapStyle('tactical')}
+              className={`px-2 py-1 rounded flex items-center space-x-1 transition-all ${
+                mapStyle === 'tactical'
+                  ? 'bg-[#0f2c4d] text-cyan-300 font-bold border border-cyan-500/50 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+              title="Dark Tactical GIS View"
+            >
+              <Radio className="w-3 h-3 text-cyan-400" />
+              <span>TACTICAL</span>
+            </button>
+
+            <button
+              onClick={() => setMapStyle('satellite')}
+              className={`px-2 py-1 rounded flex items-center space-x-1 transition-all ${
+                mapStyle === 'satellite'
+                  ? 'bg-[#0f2c4d] text-emerald-300 font-bold border border-emerald-500/50 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+              title="High-Resolution Satellite Terrain"
+            >
+              <Satellite className="w-3 h-3 text-emerald-400" />
+              <span>SATELLITE</span>
+            </button>
+
+            <button
+              onClick={() => setMapStyle('cyber')}
+              className={`px-2 py-1 rounded flex items-center space-x-1 transition-all ${
+                mapStyle === 'cyber'
+                  ? 'bg-[#0f2c4d] text-purple-300 font-bold border border-purple-500/50 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+              title="Deep Cyber Radar Grid"
+            >
+              <Globe className="w-3 h-3 text-purple-400" />
+              <span>CYBER</span>
+            </button>
+          </div>
+
+          {/* Re-center Button */}
+          <button
+            onClick={handleRecenter}
+            className="p-1.5 rounded-lg bg-[#0a1e33] hover:bg-[#12365a] border border-[#143d68] text-cyan-300 hover:text-white transition-colors"
+            title="Re-center on Target Well (WELL-A-01)"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+          </button>
+
+          {/* Wells Count */}
+          <div className="bg-[#050f1d] px-2.5 py-1 rounded-lg border border-[#143354] font-mono text-[11px] text-slate-300">
+            Visible: <span className="text-cyan-400 font-bold">{filteredWells.length}</span> / {wells.length}
           </div>
         </div>
       </div>
 
       {/* Main Map + Side Inspector Drawer */}
-      <div className="flex-1 relative flex">
+      <div className="flex-1 relative flex overflow-hidden">
         {/* Leaflet Map Container */}
-        <div className="flex-1 h-full w-full">
+        <div className="flex-1 h-full w-full relative">
           <MapContainer
             center={[centerLat, centerLon]}
             zoom={12}
             scrollWheelZoom={true}
-            style={{ height: '100%', width: '100%', backgroundColor: '#07111e' }}
+            style={{ height: '100%', width: '100%', backgroundColor: '#040b15' }}
           >
-            {/* OpenStreetMap Dark CartoDB basemap */}
-            <TileLayer
-              attribution='&copy; <a href="https://carto.com/">CARTO</a>'
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+            <MapRecenterController
+              center={[centerLat, centerLon]}
+              zoom={12}
+              trigger={recenterCount}
             />
 
-            {/* Distance buffer circles centered on active well */}
+            {/* Custom Dynamic Basemap Layer (Zero watermarks, high contrast) */}
+            <TileLayer
+              attribution={basemapConfig.attribution}
+              url={basemapConfig.url}
+              className={basemapConfig.className}
+            />
+
+            {/* Distance buffer circles centered on active well with distinct industrial styling */}
             {showCircles && activeWell && (
               <>
+                {/* 3 km Immediate Offset Zone */}
                 <Circle
                   center={[centerLat, centerLon]}
                   radius={3000}
-                  pathOptions={{ color: '#3b82f6', fillColor: '#3b82f6', fillOpacity: 0.05, dashArray: '4, 4', weight: 1.5 }}
+                  pathOptions={{
+                    color: '#22d3ee',
+                    fillColor: '#22d3ee',
+                    fillOpacity: 0.05,
+                    dashArray: '4, 4',
+                    weight: 1.5
+                  }}
                 />
+                {/* 5 km Lithology Boundary */}
                 <Circle
                   center={[centerLat, centerLon]}
                   radius={5000}
-                  pathOptions={{ color: '#8b5cf6', fillColor: '#8b5cf6', fillOpacity: 0.03, dashArray: '6, 6', weight: 1.5 }}
+                  pathOptions={{
+                    color: '#818cf8',
+                    fillColor: '#818cf8',
+                    fillOpacity: 0.035,
+                    dashArray: '6, 6',
+                    weight: 1.5
+                  }}
                 />
+                {/* 10 km Regional Buffer */}
                 <Circle
                   center={[centerLat, centerLon]}
                   radius={10000}
-                  pathOptions={{ color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.02, dashArray: '8, 8', weight: 1 }}
+                  pathOptions={{
+                    color: '#f59e0b',
+                    fillColor: '#f59e0b',
+                    fillOpacity: 0.02,
+                    dashArray: '8, 8',
+                    weight: 1.2
+                  }}
+                />
+                {/* 15 km Exploration Basin Limit */}
+                <Circle
+                  center={[centerLat, centerLon]}
+                  radius={15000}
+                  pathOptions={{
+                    color: '#ec4899',
+                    fillColor: '#ec4899',
+                    fillOpacity: 0.015,
+                    dashArray: '10, 10',
+                    weight: 1
+                  }}
                 />
               </>
             )}
@@ -217,7 +372,7 @@ export const WellMap: React.FC<WellMapProps> = ({ wells, activeWell, onNavigate 
               const isActive = !!well.is_active;
               const hasCriticalRisk = ['WELL-B-03', 'WELL-E-11', 'WELL-D-02'].includes(well.id);
               const isSelected = selectedWell?.id === well.id;
-              const icon = createWellIcon(isActive, hasCriticalRisk, isSelected);
+              const icon = createTacticalWellIcon(well.id, isActive, hasCriticalRisk, isSelected);
 
               return (
                 <Marker
@@ -231,42 +386,51 @@ export const WellMap: React.FC<WellMapProps> = ({ wells, activeWell, onNavigate 
                   }}
                 >
                   <Popup>
-                    <div className="p-1 space-y-2 min-w-[200px] text-xs">
-                      <div className="flex items-center justify-between border-b border-slate-700 pb-1.5">
-                        <span className="font-mono font-bold text-blue-400 text-sm">{well.id}</span>
-                        <span className="text-[10px] font-mono bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded">
+                    <div className="p-1 space-y-2 min-w-[210px] text-xs font-sans">
+                      <div className="flex items-center justify-between border-b border-[#1b3b5f] pb-1.5">
+                        <span className="font-mono font-bold text-cyan-400 text-sm">{well.id}</span>
+                        <span className="text-[10px] font-mono bg-[#091f38] text-amber-300 border border-amber-600/50 px-1.5 py-0.5 rounded">
                           {well.distance_km ? `${well.distance_km} km away` : 'TARGET RIG'}
                         </span>
                       </div>
+
                       <div className="space-y-1 font-mono text-[11px] text-slate-300">
-                        <div>Depth: <strong className="text-white">{well.current_depth || well.total_depth}m</strong></div>
-                        <div className="truncate">Formation: <span className="text-amber-300">{well.formation}</span></div>
-                        <div>Status: <span className="text-emerald-400">{well.status}</span></div>
-                        <div>Similarity: <strong className="text-blue-400">{Math.round((well.similarity_score || 0.8) * 100)}%</strong></div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Current Depth:</span>
+                          <strong className="text-white">{well.current_depth || well.total_depth}m</strong>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Formation:</span>
+                          <span className="text-amber-300 font-semibold truncate max-w-[120px]">{well.formation}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Drill Status:</span>
+                          <span className="text-emerald-400 font-semibold">{well.status}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-400">Similarity:</span>
+                          <strong className="text-cyan-400">{Math.round((well.similarity_score || 0.8) * 100)}%</strong>
+                        </div>
                       </div>
 
                       {well.id === 'WELL-B-03' && (
-                        <div className="bg-red-950/70 border border-red-700/60 p-1.5 rounded text-[10px] text-red-200">
-                          <strong>Historical Hazard:</strong> 48 bbl/hr mud loss at 3,440m (DDR-2024-017)
+                        <div className="bg-red-950/80 border border-red-600/60 p-1.5 rounded text-[10px] text-red-200 font-mono">
+                          <strong>CRITICAL INCIDENT:</strong> 48 bbl/hr mud loss in Barail Sandstone
                         </div>
                       )}
 
-                      <div className="pt-2 flex flex-col gap-1">
+                      <div className="pt-2 flex flex-col gap-1.5 font-mono">
                         <button
-                          onClick={() => {
-                            onNavigate('explorer', well.id);
-                          }}
-                          className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-1 px-2 rounded text-[11px] text-center"
+                          onClick={() => onNavigate('explorer', well.id)}
+                          className="w-full bg-[#0a2747] hover:bg-[#103a68] border border-cyan-500/60 text-cyan-200 font-bold py-1.5 px-2 rounded text-[11px] text-center transition-colors"
                         >
-                          Explore Well Profile
+                          OPEN WELL PROFILE
                         </button>
                         <button
-                          onClick={() => {
-                            onNavigate('reports', well.id === 'WELL-B-03' ? 'DOC-DDR-2024-017' : undefined);
-                          }}
-                          className="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 py-1 px-2 rounded text-[11px] text-center"
+                          onClick={() => onNavigate('reports', well.id === 'WELL-B-03' ? 'DOC-DDR-2024-017' : undefined)}
+                          className="w-full bg-[#061424] hover:bg-[#0b213b] border border-[#14385e] text-slate-300 py-1 px-2 rounded text-[10px] text-center transition-colors"
                         >
-                          View Reports
+                          INSPECT WCR / DDR
                         </button>
                       </div>
                     </div>
@@ -275,56 +439,105 @@ export const WellMap: React.FC<WellMapProps> = ({ wells, activeWell, onNavigate 
               );
             })}
           </MapContainer>
+
+          {/* Tactical GIS Compass / North Indicator Overlay (Top Right of Map) */}
+          <div className="absolute top-4 right-4 z-10 pointer-events-none hidden sm:flex flex-col items-center bg-[#071321]/90 backdrop-blur-md border border-[#143354] rounded-xl p-2.5 text-center shadow-lg font-mono">
+            <div className="relative w-8 h-8 rounded-full border border-cyan-500/40 flex items-center justify-center">
+              <Compass className="w-5 h-5 text-cyan-400" />
+              <span className="absolute -top-1.5 font-bold text-[9px] text-amber-400">N</span>
+            </div>
+            <span className="text-[9px] text-slate-400 mt-1">GRID N</span>
+          </div>
+
+          {/* Bottom Left Tactical Telemetry HUD Strip */}
+          <div className="absolute bottom-4 left-4 z-10 pointer-events-none hidden md:flex items-center space-x-3 bg-[#071321]/90 backdrop-blur-md border border-[#143354] rounded-xl px-3 py-2 text-xs font-mono shadow-xl">
+            <div className="flex items-center space-x-1.5">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-slate-300 font-bold">LAT: 27.5015° N</span>
+              <span className="text-slate-600">|</span>
+              <span className="text-slate-300 font-bold">LON: 95.3540° E</span>
+            </div>
+            <span className="text-slate-600">|</span>
+            <span className="text-amber-400">DEPTH: 3,420m (±150m)</span>
+            <span className="text-slate-600">|</span>
+            <span className="text-cyan-400">BASIN: ASSAM SHELF</span>
+          </div>
+
+          {/* Range Legend Overlay (Bottom Right of Map) */}
+          {showCircles && (
+            <div className="absolute bottom-4 right-4 z-10 pointer-events-none hidden sm:flex items-center space-x-3 bg-[#071321]/90 backdrop-blur-md border border-[#143354] rounded-lg px-3 py-1.5 text-[10px] font-mono shadow-lg">
+              <div className="flex items-center space-x-1">
+                <span className="w-2.5 h-2.5 rounded-full border border-cyan-400 bg-cyan-400/20" />
+                <span className="text-cyan-300">3km</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <span className="w-2.5 h-2.5 rounded-full border border-indigo-400 bg-indigo-400/20" />
+                <span className="text-indigo-300">5km</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <span className="w-2.5 h-2.5 rounded-full border border-amber-400 bg-amber-400/20" />
+                <span className="text-amber-300">10km</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <span className="w-2.5 h-2.5 rounded-full border border-pink-400 bg-pink-400/20" />
+                <span className="text-pink-300">15km</span>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Selected Well Inspector Drawer (Right overlay) */}
         {selectedWell && (
-          <div className="w-80 bg-[#081525]/95 backdrop-blur-md border-l border-[#1a2d48] p-5 flex flex-col justify-between overflow-y-auto z-20 shadow-2xl">
+          <div className="w-80 bg-[#071321]/98 backdrop-blur-md border-l border-[#143354] p-5 flex flex-col justify-between overflow-y-auto z-30 shadow-2xl animate-in slide-in-from-right duration-200">
             <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center justify-between border-b border-[#143354] pb-3">
                 <div>
                   <div className="flex items-center space-x-2">
                     <h3 className="font-mono font-bold text-lg text-white">{selectedWell.id}</h3>
-                    {selectedWell.is_active && (
+                    {selectedWell.is_active ? (
                       <span className="bg-emerald-950 text-emerald-300 font-mono text-[10px] px-1.5 py-0.5 rounded border border-emerald-700">
-                        ACTIVE TARGET
+                        TARGET RIG
+                      </span>
+                    ) : (
+                      <span className="bg-blue-950 text-cyan-300 font-mono text-[10px] px-1.5 py-0.5 rounded border border-cyan-700">
+                        OFFSET WELL
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-400 mt-0.5 truncate">{selectedWell.well_name}</p>
+                  <p className="text-xs text-slate-400 mt-0.5 font-mono">{selectedWell.well_name}</p>
                 </div>
                 <button
                   onClick={() => setSelectedWell(null)}
-                  className="text-slate-400 hover:text-white text-sm p-1"
+                  className="text-slate-400 hover:text-white text-sm p-1 rounded hover:bg-slate-800 transition-colors"
                 >
                   ✕
                 </button>
               </div>
 
               {/* Coordinates & Proximity */}
-              <div className="bg-[#0d1d33] p-3 rounded-lg border border-[#1a2d48] space-y-2 text-xs font-mono">
+              <div className="bg-[#050f1d] p-3 rounded-xl border border-[#143354] space-y-2 text-xs font-mono">
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Distance to Target:</span>
-                  <span className="text-blue-400 font-bold">{selectedWell.distance_km ? `${selectedWell.distance_km} km` : '0.0 km'}</span>
+                  <span className="text-slate-400">Radial Offset:</span>
+                  <span className="text-cyan-400 font-bold">{selectedWell.distance_km ? `${selectedWell.distance_km} km` : '0.0 km (Target)'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Similarity Metric:</span>
+                  <span className="text-slate-400">Geological Similarity:</span>
                   <span className="text-emerald-400 font-bold">{Math.round((selectedWell.similarity_score || 0.8) * 100)}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Total Depth:</span>
-                  <span className="text-slate-200">{selectedWell.total_depth} m</span>
-                </div>
-                <div className="flex justify-between">
                   <span className="text-slate-400">Current Depth:</span>
-                  <span className="text-slate-200">{selectedWell.current_depth || selectedWell.total_depth} m</span>
+                  <span className="text-slate-100 font-semibold">{selectedWell.current_depth || selectedWell.total_depth} m</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Formation:</span>
-                  <span className="text-amber-300 text-right truncate max-w-[150px]">{selectedWell.formation}</span>
+                  <span className="text-slate-400">Target Depth (TD):</span>
+                  <span className="text-slate-100">{selectedWell.total_depth} m</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-400">Field Sector:</span>
+                  <span className="text-slate-400">Stratigraphic Zone:</span>
+                  <span className="text-amber-300 font-semibold text-right truncate max-w-[140px]">{selectedWell.formation}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Basin Sector:</span>
                   <span className="text-slate-300">{selectedWell.field}</span>
                 </div>
               </div>
@@ -332,64 +545,64 @@ export const WellMap: React.FC<WellMapProps> = ({ wells, activeWell, onNavigate 
               {/* Major Historical Incidents */}
               <div className="space-y-2">
                 <span className="text-xs font-mono font-semibold text-slate-300 uppercase tracking-wider block">
-                  Identified Historical Hazards
+                  Historical Hazard Incidents
                 </span>
                 {selectedWell.id === 'WELL-B-03' ? (
-                  <div className="bg-red-950/40 border border-red-800/60 p-3 rounded-lg text-xs space-y-1.5">
+                  <div className="bg-red-950/50 border border-red-600/70 p-3 rounded-xl text-xs space-y-1.5">
                     <div className="flex items-center space-x-1.5 text-red-400 font-bold">
                       <AlertTriangle className="w-3.5 h-3.5" />
                       <span>Severe Mud Loss (48 bbl/hr)</span>
                     </div>
-                    <p className="text-slate-300 text-[11px] leading-relaxed">
+                    <p className="text-slate-300 text-[11px] leading-relaxed font-sans">
                       Occurred at 3,440m in Barail Sandstone / XYZ. Required 50 bbl engineered CaCO3/mica LCM pill.
                     </p>
                     <div className="text-[10px] font-mono text-slate-400 pt-1 border-t border-red-900/40">
-                      Source: DDR-2024-017 (Page 4)
+                      Traceability: DDR-2024-017 (Page 4)
                     </div>
                   </div>
                 ) : selectedWell.id === 'WELL-C-07' ? (
-                  <div className="bg-amber-950/40 border border-amber-800/60 p-3 rounded-lg text-xs space-y-1.5">
+                  <div className="bg-amber-950/50 border border-amber-600/70 p-3 rounded-xl text-xs space-y-1.5">
                     <div className="flex items-center space-x-1.5 text-amber-400 font-bold">
                       <AlertTriangle className="w-3.5 h-3.5" />
                       <span>Severe Torque Surge & Stick-Slip</span>
                     </div>
-                    <p className="text-slate-300 text-[11px] leading-relaxed">
+                    <p className="text-slate-300 text-[11px] leading-relaxed font-sans">
                       At 3,390m depth. Peak torque 28.2 kft-lbs. Pumped polymer bead pill and altered rotary speed.
                     </p>
                     <div className="text-[10px] font-mono text-slate-400 pt-1 border-t border-amber-900/40">
-                      Source: DDR-2023-112 (Page 3)
+                      Traceability: DDR-2023-112 (Page 3)
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-slate-900/60 border border-slate-800 p-3 rounded-lg text-xs text-slate-400">
+                  <div className="bg-[#050f1d] border border-[#143354] p-3 rounded-xl text-xs text-slate-400 font-mono">
                     Routine offset well with historical logging intervals available in repository.
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Direct Action Buttons matching Section 6 */}
-            <div className="pt-4 border-t border-slate-800 space-y-2">
+            {/* Direct Action Buttons */}
+            <div className="pt-4 border-t border-[#143354] space-y-2 font-mono">
               <button
                 onClick={() => onNavigate('explorer', selectedWell.id)}
-                className="w-full flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 rounded-lg text-xs shadow transition-colors"
+                className="w-full flex items-center justify-center space-x-2 bg-[#0a2747] hover:bg-[#103a68] border border-cyan-500/60 text-cyan-200 font-bold py-2 rounded-xl text-xs shadow-md transition-all"
               >
                 <Compass className="w-3.5 h-3.5" />
-                <span>Explore Well</span>
+                <span>EXPLORE WELL PROFILE</span>
               </button>
               <button
-                onClick={() => onNavigate('knowledge', selectedWell.id)}
-                className="w-full flex items-center justify-center space-x-2 bg-[#12233b] hover:bg-[#182f50] text-slate-200 font-medium py-2 rounded-lg text-xs border border-slate-700 transition-colors"
+                onClick={() => onNavigate('correlation')}
+                className="w-full flex items-center justify-center space-x-2 bg-[#050f1d] hover:bg-[#0c2038] text-slate-200 font-medium py-2 rounded-xl text-xs border border-[#143354] transition-colors"
               >
-                <Layers className="w-3.5 h-3.5" />
-                <span>View Historical Events</span>
+                <Layers className="w-3.5 h-3.5 text-amber-400" />
+                <span>FORMATION CORRELATION</span>
               </button>
               <button
                 onClick={() => onNavigate('reports', selectedWell.id === 'WELL-B-03' ? 'DOC-DDR-2024-017' : undefined)}
-                className="w-full flex items-center justify-center space-x-2 bg-[#12233b] hover:bg-[#182f50] text-slate-200 font-medium py-2 rounded-lg text-xs border border-slate-700 transition-colors"
+                className="w-full flex items-center justify-center space-x-2 bg-[#050f1d] hover:bg-[#0c2038] text-slate-200 font-medium py-2 rounded-xl text-xs border border-[#143354] transition-colors"
               >
-                <FileText className="w-3.5 h-3.5" />
-                <span>View Reports</span>
+                <FileText className="w-3.5 h-3.5 text-cyan-400" />
+                <span>VIEW WCR / DDR REPORTS</span>
               </button>
             </div>
           </div>
