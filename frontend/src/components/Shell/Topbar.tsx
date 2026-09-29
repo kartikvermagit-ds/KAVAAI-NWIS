@@ -1,5 +1,6 @@
 import { Shield, HardHat, Bell, LogOut, Home } from 'lucide-react';
 import { Well } from '../../types';
+import { BrandLogo } from '../Common/BrandLogo';
 
 interface TopbarProps {
   activeWell: Well | null;
@@ -22,23 +23,10 @@ export const Topbar: React.FC<TopbarProps> = ({
     <header className="h-16 bg-[#071322] border-b border-[#1b2d48] px-6 flex items-center justify-between z-30 sticky top-0 shadow-md">
       {/* Brand & Context */}
       <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-3">
-          <img
-            src="/logo.png"
-            alt="KAVAAI-NWIS Logo"
-            className="h-10 w-auto object-contain rounded cursor-pointer transition-transform hover:scale-105"
-            onClick={() => onNavigate('overview')}
-          />
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="font-mono font-bold tracking-wider text-white text-base">KAVAAI-NWIS</span>
-              <span className="bg-blue-950/80 text-blue-300 text-[10px] font-mono px-2 py-0.5 rounded border border-blue-700/50">
-                SIH 2026 • SIH26121
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-400">Nearby Wells Intelligence & Decision Support</p>
-          </div>
-        </div>
+        <BrandLogo
+          size="md"
+          onClick={() => onNavigate('overview')}
+        />
 
         <div className="h-7 w-[1px] bg-slate-800 hidden md:block" />
 

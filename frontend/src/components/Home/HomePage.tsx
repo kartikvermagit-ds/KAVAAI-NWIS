@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   ExternalLink
 } from 'lucide-react';
+import { BrandLogo } from '../Common/BrandLogo';
 
 interface HomePageProps {
   onEnterLogin: () => void;
@@ -52,26 +53,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       <header className="sticky top-0 z-40 bg-[#071321]/90 backdrop-blur-md border-b border-[#123A5A]/80 px-4 sm:px-8 py-3.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo & Product Title */}
-          <div className="flex items-center space-x-3.5">
-            <img
-              src="/logo.png"
-              alt="KAVAAI-NWIS Logo"
-              className="h-9 w-auto object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.35)]"
-            />
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-mono font-bold text-lg tracking-wider text-white">
-                  KAVAAI<span className="text-amber-400">-NWIS</span>
-                </span>
-                <span className="hidden sm:inline-block bg-blue-950/80 text-cyan-300 text-[10px] font-mono px-2 py-0.5 rounded border border-cyan-800/60">
-                  SIH 2026 • SIH26121
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-400 font-mono hidden md:block">
-                Nearby Wells Intelligence & Decision Support
-              </p>
-            </div>
-          </div>
+          <BrandLogo size="md" />
 
           {/* Quick Status Pill */}
           <div className="hidden lg:flex items-center space-x-4 bg-[#0a1b2d] px-3.5 py-1.5 rounded-lg border border-[#143354] font-mono text-[11px]">
@@ -391,12 +373,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* Engineering Footer */}
       <footer className="mt-20 border-t border-[#123A5A]/80 bg-[#050e1a] px-4 sm:px-8 py-8 font-mono text-xs text-slate-400">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-3">
-            <img src="/logo.png" alt="Logo" className="h-6 w-auto object-contain opacity-80" />
-            <span className="text-slate-300 font-bold">KAVAAI-NWIS</span>
-            <span className="text-slate-600">|</span>
-            <span>SIH 2026 • SIH26121</span>
-          </div>
+          <BrandLogo size="sm" showBadge={false} />
 
           <div className="flex items-center space-x-6 text-[11px]">
             <span className="text-slate-500">CATEGORY: SMART AUTOMATION</span>

@@ -29,12 +29,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onSelectView, ale
       {/* Module Title */}
       <div className="p-3.5 border-b border-[#15253b] space-y-1.5">
         <div className="flex items-center space-x-2">
-          <img
-            src="/logo.png"
-            alt="KAVAAI-NWIS"
-            className="h-6 w-auto object-contain rounded"
-          />
-          <span className="text-[11px] font-mono uppercase tracking-wider text-blue-400 font-bold">KAVAAI-NWIS</span>
+          <div className="relative w-5 h-5 rounded bg-gradient-to-br from-[#0e2746] to-[#040e1b] border border-amber-500/80 flex items-center justify-center">
+            <span className="font-mono font-black text-[10px] text-amber-400">K</span>
+          </div>
+          <span className="text-[11px] font-mono uppercase tracking-wider text-white font-bold">
+            KAVAAI<span className="text-amber-400">-NWIS</span>
+          </span>
         </div>
         <div className="text-[10px] text-slate-400 font-mono">Exploration Block-4 • Rig Horizon-04</div>
       </div>

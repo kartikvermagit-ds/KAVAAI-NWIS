@@ -155,22 +155,32 @@ export const AuthPanel: React.FC<AuthPanelProps> = ({
           </button>
         </div>
 
-        {/* Logo Lockup */}
+        {/* Custom Industrial Emblem & Typography Lockup */}
         <div className="text-center pt-2 pb-3">
-          <div className="flex items-center justify-center space-x-2.5 mb-1.5">
-            <img
-              src="/logo.png"
-              alt="KAVAAI Logo"
-              className="h-9 w-auto object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.3)]"
-            />
-            <span className="font-mono font-bold text-xl tracking-wider text-white">
-              KAVAAI<span className="text-amber-400">-NWIS</span>
+          <div className="flex justify-center mb-2.5">
+            <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-[#0e2746] via-[#07172b] to-[#040e1b] border-2 border-amber-500/80 shadow-[0_0_20px_rgba(245,158,11,0.35)] flex items-center justify-center">
+              {/* Corner bracket accents */}
+              <div className="absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 border-amber-400 rounded-tl-sm pointer-events-none" />
+              <div className="absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 border-cyan-400 rounded-br-sm pointer-events-none" />
+              <span className="font-mono font-black text-2xl text-amber-400 drop-shadow-[0_0_10px_rgba(245,158,11,0.7)]">
+                K
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center space-x-1.5">
+            <span className="font-mono font-extrabold text-lg tracking-widest text-white">
+              KAVAAI
+            </span>
+            <span className="font-mono font-extrabold text-lg tracking-widest text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">
+              NWIS
             </span>
           </div>
-          <div className="text-[11px] font-mono uppercase tracking-wider text-cyan-300/90 font-medium">
+
+          <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-300 font-semibold mt-1">
             NEARBY WELLS INTELLIGENCE SYSTEM
           </div>
-          <div className="text-[10px] text-slate-400 tracking-wide font-sans mt-0.5">
+          <div className="text-[9px] text-slate-400 font-sans tracking-wider mt-0.5">
             AI-POWERED DRILLING KNOWLEDGE & DECISION SUPPORT
           </div>
         </div>
