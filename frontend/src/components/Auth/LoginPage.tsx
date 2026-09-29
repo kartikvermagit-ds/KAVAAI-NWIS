@@ -5,9 +5,10 @@ import { AuthPanel } from './AuthPanel';
 interface LoginPageProps {
   onLogin: (operator: { name: string; id: string; role: string }) => void;
   onContinueGuest: () => void;
+  onBackToHome?: () => void;
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onContinueGuest }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onContinueGuest, onBackToHome }) => {
   return (
     <div className="relative min-h-screen w-full bg-[#030912] flex items-center justify-center p-4 sm:p-6 overflow-hidden select-none font-sans">
       {/* Engineering Background Grid (35-50px spacing, low opacity blue-gray lines) */}
@@ -72,7 +73,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onContinueGuest }
       <AuthPanel
         onSuccess={onLogin}
         onContinueGuest={onContinueGuest}
-        onBackToHome={onContinueGuest}
+        onBackToHome={onBackToHome}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { Shield, HardHat, Bell, LogOut, Lock } from 'lucide-react';
+import { Shield, HardHat, Bell, LogOut, Home } from 'lucide-react';
 import { Well } from '../../types';
 
 interface TopbarProps {
@@ -7,6 +7,7 @@ interface TopbarProps {
   onNavigate: (view: string) => void;
   operator?: { name: string; id: string; role: string } | null;
   onLogout?: () => void;
+  onGoHome?: () => void;
 }
 
 export const Topbar: React.FC<TopbarProps> = ({
@@ -14,7 +15,8 @@ export const Topbar: React.FC<TopbarProps> = ({
   alertCount,
   onNavigate,
   operator,
-  onLogout
+  onLogout,
+  onGoHome
 }) => {
   return (
     <header className="h-16 bg-[#071322] border-b border-[#1b2d48] px-6 flex items-center justify-between z-30 sticky top-0 shadow-md">
@@ -89,6 +91,17 @@ export const Topbar: React.FC<TopbarProps> = ({
           <Shield className="w-3.5 h-3.5 text-blue-400" />
           <span className="text-[11px] font-mono font-medium text-slate-300">Synthetic Demonstration Dataset</span>
         </div>
+
+        {/* Home page button */}
+        {onGoHome && (
+          <button
+            onClick={onGoHome}
+            className="p-2 rounded bg-[#0e1d33] hover:bg-[#162947] text-cyan-300 hover:text-white border border-[#1e3455] transition-colors"
+            title="Landing Page / Product Presentation"
+          >
+            <Home className="w-4 h-4 text-cyan-400" />
+          </button>
+        )}
 
         {/* Alerts quick badge */}
         <button

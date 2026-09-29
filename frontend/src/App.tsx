@@ -12,6 +12,7 @@ import { AlertCenter } from './components/AlertCenter/AlertCenter';
 import { KnowledgeBase } from './components/KnowledgeBase/KnowledgeBase';
 import { SystemStatus } from './components/SystemStatus/SystemStatus';
 import { LoginPage } from './components/Auth/LoginPage';
+import { HomePage } from './components/Home/HomePage';
 
 import { api } from './api/client';
 import { Well, DashboardSummary, Alert } from './types';
@@ -19,6 +20,10 @@ import { Well, DashboardSummary, Alert } from './types';
 export function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return localStorage.getItem('nwis_authenticated') === 'true';
+  });
+
+  const [currentScreen, setCurrentScreen] = useState<'home' | 'login' | 'dashboard'>(() => {
+    return localStorage.getItem('nwis_authenticated') === 'true' ? 'dashboard' : 'home';
   });
 
   const [operator, setOperator] = useState<{ name: string; id: string; role: string } | null>(() => {
@@ -88,6 +93,7 @@ export function App() {
     localStorage.setItem('nwis_operator', JSON.stringify(op));
     setOperator(op);
     setIsAuthenticated(true);
+    setCurrentScreen('dashboard');
     setCurrentView('overview');
   };
 
@@ -101,19 +107,31 @@ export function App() {
     localStorage.setItem('nwis_operator', JSON.stringify(guest));
     setOperator(guest);
     setIsAuthenticated(true);
+    setCurrentScreen('dashboard');
     setCurrentView('overview');
   };
 
   const handleLogout = () => {
     localStorage.removeItem('nwis_authenticated');
     setIsAuthenticated(false);
+    setCurrentScreen('login');
   };
 
-  if (!isAuthenticated) {
+  if (currentScreen === 'home') {
+    return (
+      <HomePage
+        onEnterLogin={() => setCurrentScreen('login')}
+        onEnterDashboard={handleContinueGuest}
+      />
+    );
+  }
+
+  if (currentScreen === 'login' || !isAuthenticated) {
     return (
       <LoginPage
         onLogin={handleLogin}
         onContinueGuest={handleContinueGuest}
+        onBackToHome={() => setCurrentScreen('home')}
       />
     );
   }
@@ -127,6 +145,7 @@ export function App() {
         onNavigate={handleNavigate}
         operator={operator}
         onLogout={handleLogout}
+        onGoHome={() => setCurrentScreen('home')}
       />
 
       {/* Main Body with Sidebar + View Area */}
