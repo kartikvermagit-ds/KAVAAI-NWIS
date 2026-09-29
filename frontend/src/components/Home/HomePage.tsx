@@ -19,6 +19,7 @@ import {
 import { BrandLogo } from '../Common/BrandLogo';
 import { DrillingSimulationBackdrop } from './DrillingSimulationBackdrop';
 import { NavbarLiveSimulation } from './NavbarLiveSimulation';
+import { OurTeamSection } from './OurTeamSection';
 
 interface HomePageProps {
   onEnterLogin: () => void;
@@ -343,6 +344,9 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </section>
 
+        {/* OUR TEAM SECTION */}
+        <OurTeamSection />
+
         {/* Call To Action Banner */}
         <section className="bg-gradient-to-r from-[#091b32] via-[#071b30] to-[#0d2a4a] border border-[#16426d] rounded-2xl p-8 sm:p-12 text-center space-y-6 shadow-[0_0_40px_rgba(11,36,68,0.5)]">
           <div className="max-w-2xl mx-auto space-y-3">
@@ -371,19 +375,42 @@ export const HomePage: React.FC<HomePageProps> = ({
         </section>
       </main>
 
-      {/* Engineering Footer */}
-      <footer className="mt-20 border-t border-[#123A5A]/80 bg-[#050e1a] px-4 sm:px-8 py-8 font-mono text-xs text-slate-400">
+      {/* Engineering Footer matching visual reference */}
+      <footer className="mt-20 border-t border-[#123A5A]/80 bg-[#050e1a]/95 px-4 sm:px-8 py-5 font-mono text-xs text-slate-400">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <BrandLogo size="sm" showBadge={false} />
-
-          <div className="flex items-center space-x-6 text-[11px]">
-            <span className="text-slate-500">CATEGORY: SMART AUTOMATION</span>
-            <span className="text-slate-500">TEAM: KAVAAI</span>
-            <span className="text-emerald-400">SYSTEM STATUS: OPERATIONAL</span>
+          {/* Brand & Version */}
+          <div className="flex items-center space-x-3">
+            <BrandLogo size="sm" showBadge={false} />
+            <span className="text-slate-500 font-mono text-[11px] hidden sm:inline">
+              v1.0.0 | Industrial AI Workbench
+            </span>
           </div>
 
-          <div className="text-[10px] text-slate-500">
-            Synthetic Benchmark Prototype • Non-Confidential Data
+          {/* Nav Links */}
+          <div className="flex items-center space-x-6 text-[11px] text-slate-400">
+            <span className="hover:text-cyan-300 cursor-pointer transition-colors">Privacy</span>
+            <span className="hover:text-cyan-300 cursor-pointer transition-colors">Terms</span>
+            <span className="hover:text-cyan-300 cursor-pointer transition-colors">Documentation</span>
+            <span className="hover:text-cyan-300 cursor-pointer transition-colors">Contact</span>
+          </div>
+
+          {/* Social Icons & Status */}
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3 text-slate-400">
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-cyan-300 transition-colors font-mono font-bold text-xs" title="LinkedIn">
+                in
+              </a>
+              <a href="https://github.com/kartikvermagit-ds/KAVAAI-NWIS" target="_blank" rel="noreferrer" className="hover:text-cyan-300 transition-colors" title="GitHub">
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+            </div>
+
+            <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-[#07192b] border border-emerald-500/40 text-emerald-400 font-mono text-[10px]">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>LOCAL WORKSTATION ACTIVE</span>
+            </div>
           </div>
         </div>
       </footer>
