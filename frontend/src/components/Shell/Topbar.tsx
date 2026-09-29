@@ -1,14 +1,21 @@
-import React from 'react';
-import { Shield, HardHat, Bell } from 'lucide-react';
+import { Shield, HardHat, Bell, LogOut, Lock } from 'lucide-react';
 import { Well } from '../../types';
 
 interface TopbarProps {
   activeWell: Well | null;
   alertCount: number;
   onNavigate: (view: string) => void;
+  operator?: { name: string; id: string; role: string } | null;
+  onLogout?: () => void;
 }
 
-export const Topbar: React.FC<TopbarProps> = ({ activeWell, alertCount, onNavigate }) => {
+export const Topbar: React.FC<TopbarProps> = ({
+  activeWell,
+  alertCount,
+  onNavigate,
+  operator,
+  onLogout
+}) => {
   return (
     <header className="h-16 bg-[#071322] border-b border-[#1b2d48] px-6 flex items-center justify-between z-30 sticky top-0 shadow-md">
       {/* Brand & Context */}
@@ -97,15 +104,29 @@ export const Topbar: React.FC<TopbarProps> = ({ activeWell, alertCount, onNaviga
           )}
         </button>
 
-        {/* Engineer profile */}
-        <div className="flex items-center space-x-2 pl-2 border-l border-slate-800">
+        {/* Engineer profile & Logout */}
+        <div className="flex items-center space-x-2.5 pl-2 border-l border-slate-800">
           <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300">
             <HardHat className="w-4 h-4 text-amber-400" />
           </div>
           <div className="hidden xl:block leading-tight text-left">
-            <div className="text-xs font-medium text-slate-200">Lead Drilling Eng.</div>
-            <div className="text-[10px] text-slate-400 font-mono">Rig Horizon-04 (Demo)</div>
+            <div className="text-xs font-medium text-slate-200 truncate max-w-[140px]">
+              {operator?.name || 'Lead Drilling Eng.'}
+            </div>
+            <div className="text-[10px] text-slate-400 font-mono">
+              {operator?.id || 'Rig Horizon-04'}
+            </div>
           </div>
+
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="p-1.5 rounded bg-slate-900/80 hover:bg-red-950/60 border border-slate-700/60 hover:border-red-500/50 text-slate-400 hover:text-red-300 transition-colors ml-1"
+              title="Lock Workstation / Sign Out"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
       </div>
     </header>

@@ -11,11 +11,28 @@ import { AICopilot } from './components/AICopilot/AICopilot';
 import { AlertCenter } from './components/AlertCenter/AlertCenter';
 import { KnowledgeBase } from './components/KnowledgeBase/KnowledgeBase';
 import { SystemStatus } from './components/SystemStatus/SystemStatus';
+import { LoginPage } from './components/Auth/LoginPage';
 
 import { api } from './api/client';
 import { Well, DashboardSummary, Alert } from './types';
 
 export function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem('nwis_authenticated') === 'true';
+  });
+
+  const [operator, setOperator] = useState<{ name: string; id: string; role: string } | null>(() => {
+    const saved = localStorage.getItem('nwis_operator');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return null;
+      }
+    }
+    return { name: 'Lead Drilling Eng.', id: 'engineer@nwis.local', role: 'Drilling Engineer' };
+  });
+
   const [currentView, setCurrentView] = useState<string>('overview');
   const [selectedWellId, setSelectedWellId] = useState<string>('WELL-B-03');
   const [selectedDocId, setSelectedDocId] = useState<string | undefined>('DOC-DDR-2024-017');
@@ -66,6 +83,41 @@ export function App() {
     setAlertCount((prev) => Math.max(0, prev - 1));
   };
 
+  const handleLogin = (op: { name: string; id: string; role: string }) => {
+    localStorage.setItem('nwis_authenticated', 'true');
+    localStorage.setItem('nwis_operator', JSON.stringify(op));
+    setOperator(op);
+    setIsAuthenticated(true);
+    setCurrentView('overview');
+  };
+
+  const handleContinueGuest = () => {
+    const guest = {
+      name: 'Guest Operator',
+      id: 'NWIS-GUEST-01',
+      role: 'Operations Specialist'
+    };
+    localStorage.setItem('nwis_authenticated', 'true');
+    localStorage.setItem('nwis_operator', JSON.stringify(guest));
+    setOperator(guest);
+    setIsAuthenticated(true);
+    setCurrentView('overview');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('nwis_authenticated');
+    setIsAuthenticated(false);
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <LoginPage
+        onLogin={handleLogin}
+        onContinueGuest={handleContinueGuest}
+      />
+    );
+  }
+
   return (
     <div className="flex flex-col h-screen w-screen bg-[#050c17] text-slate-100 overflow-hidden select-none font-sans">
       {/* Top Application Bar */}
@@ -73,6 +125,8 @@ export function App() {
         activeWell={activeWell}
         alertCount={alertCount}
         onNavigate={handleNavigate}
+        operator={operator}
+        onLogout={handleLogout}
       />
 
       {/* Main Body with Sidebar + View Area */}
