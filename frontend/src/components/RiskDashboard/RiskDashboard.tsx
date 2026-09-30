@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   AlertTriangle, Shield, CheckCircle2, FileText,
-  Eye, Sliders, Info, HardHat, RefreshCw
+  Eye, Sliders, Info, HardHat, RefreshCw, Globe, Cpu, ArrowRight, Activity
 } from 'lucide-react';
 import { RiskItem, Well } from '../../types';
 import { api } from '../../api/client';
@@ -16,6 +16,7 @@ export const RiskDashboard: React.FC<RiskDashboardProps> = ({ activeWell, onNavi
   const [depthTolerance, setDepthTolerance] = useState<number>(150);
   const [maxRadius, setMaxRadius] = useState<number>(10);
   const [loading, setLoading] = useState(false);
+  const [simulatedMudWeight, setSimulatedMudWeight] = useState<number>(1.26); // Specific Gravity (SG)
 
   const fetchRisks = () => {
     setLoading(true);
@@ -98,6 +99,110 @@ export const RiskDashboard: React.FC<RiskDashboardProps> = ({ activeWell, onNavi
             The KAVAAI system provides evidence-backed situational intelligence from offset wells.
             It does NOT claim to predict drilling accidents with certainty nor does it replace the certified judgment of the rig drilling engineer.
           </p>
+        </div>
+      </div>
+
+      {/* Interactive Drilling Margin & Safe Mud Weight Simulator (SIH26121 Hydraulic Verification) */}
+      <div className="bg-[#07172b] p-5 rounded-2xl border border-[#1b3f69] space-y-4 shadow-lg">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 rounded-lg bg-cyan-950/80 border border-cyan-500/60 flex items-center justify-center">
+              <Sliders className="w-4 h-4 text-cyan-400" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <h3 className="font-mono font-bold text-white text-sm uppercase tracking-wider">
+                  Real-time Mud Weight & Hydraulic Margin Sensitivity Lab
+                </h3>
+                <span className="text-[10px] font-mono bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800">
+                  SIH26121 WELL CONTROL
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5 font-mono">
+                Evaluate drilling mud weight versus Barail Sandstone pore pressure (1.18 SG) and fracture gradient (1.33 SG)
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => onNavigate('simulation')}
+              className="flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-[#0d233e] hover:bg-[#14345d] text-cyan-300 text-xs font-mono font-bold border border-cyan-700/60"
+            >
+              <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Rig Simulation</span>
+            </button>
+            <button
+              onClick={() => onNavigate('globe')}
+              className="flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-[#032014] hover:bg-[#063321] text-emerald-300 text-xs font-mono font-bold border border-emerald-700/60"
+            >
+              <Globe className="w-3.5 h-3.5 text-emerald-400" />
+              <span>3D Globe</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Dynamic Margin Status Strip */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 font-mono text-xs">
+          <div className="bg-[#0b1c33] p-3 rounded-xl border border-slate-800">
+            <span className="text-[10px] text-slate-400 block uppercase">Simulated Mud Weight</span>
+            <span className="text-xl font-bold text-cyan-400">{simulatedMudWeight.toFixed(2)} SG</span>
+            <span className="text-[10px] text-slate-400 block mt-0.5">{(simulatedMudWeight * 8.34).toFixed(1)} ppg equivalent</span>
+          </div>
+
+          <div className="bg-[#0b1c33] p-3 rounded-xl border border-slate-800">
+            <span className="text-[10px] text-slate-400 block uppercase">Formation Pore Pressure</span>
+            <span className="text-xl font-bold text-amber-400">1.18 SG</span>
+            <span className="text-[10px] text-slate-400 block mt-0.5">Kick Influx Threshold</span>
+          </div>
+
+          <div className="bg-[#0b1c33] p-3 rounded-xl border border-slate-800">
+            <span className="text-[10px] text-slate-400 block uppercase">Fracture Gradient</span>
+            <span className="text-xl font-bold text-red-400">1.33 SG</span>
+            <span className="text-[10px] text-slate-400 block mt-0.5">Thief Zone Loss Threshold</span>
+          </div>
+
+          <div className={`p-3 rounded-xl border flex flex-col justify-center ${
+            simulatedMudWeight > 1.33
+              ? 'bg-red-950/60 border-red-500 text-red-300 animate-pulse'
+              : simulatedMudWeight < 1.18
+              ? 'bg-amber-950/60 border-amber-500 text-amber-300 animate-pulse'
+              : 'bg-emerald-950/60 border-emerald-600 text-emerald-300'
+          }`}>
+            <span className="text-[10px] block uppercase font-bold">Hydraulic State</span>
+            <span className="text-sm font-bold mt-0.5">
+              {simulatedMudWeight > 1.33
+                ? 'OVERBALANCED: LOSS RISK!'
+                : simulatedMudWeight < 1.18
+                ? 'UNDERBALANCED: KICK RISK!'
+                : 'STABLE DRILLING WINDOW'}
+            </span>
+            <span className="text-[10px] opacity-80 mt-0.5">
+              {simulatedMudWeight > 1.33
+                ? 'Replicates WELL-B-03 48 bbl/hr event'
+                : simulatedMudWeight < 1.18
+                ? 'Formation gas influx expected'
+                : 'Safe operational margin maintained'}
+            </span>
+          </div>
+        </div>
+
+        {/* Interactive Slider Bar */}
+        <div className="space-y-1 font-mono text-xs pt-1">
+          <div className="flex justify-between text-[11px] text-slate-400">
+            <span>1.10 SG (Underbalanced)</span>
+            <span className="text-emerald-400 font-bold">Operational Setting: {simulatedMudWeight.toFixed(2)} SG</span>
+            <span>1.45 SG (Severe Overbalanced)</span>
+          </div>
+          <input
+            type="range"
+            min={1.10}
+            max={1.45}
+            step={0.01}
+            value={simulatedMudWeight}
+            onChange={(e) => setSimulatedMudWeight(parseFloat(e.target.value))}
+            className="w-full accent-cyan-400 cursor-pointer h-2 bg-slate-800 rounded-lg"
+          />
         </div>
       </div>
 

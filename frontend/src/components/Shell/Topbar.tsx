@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Shield, HardHat, Bell, LogOut, Home, Globe, Activity, Radio, Cpu } from 'lucide-react';
+import { Shield, HardHat, Bell, LogOut, Home, Globe, Activity, Radio, Cpu, Sparkles } from 'lucide-react';
 import { Well } from '../../types';
 import { BrandLogo } from '../Common/BrandLogo';
+import { SIHStoryModal } from '../Common/SIHStoryModal';
 
 interface TopbarProps {
   activeWell: Well | null;
@@ -21,6 +22,7 @@ export const Topbar: React.FC<TopbarProps> = ({
   onGoHome
 }) => {
   const [simDepth, setSimDepth] = useState<number>(3420.4);
+  const [isStoryOpen, setIsStoryOpen] = useState<boolean>(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Micro-telemetry tick
@@ -152,6 +154,16 @@ export const Topbar: React.FC<TopbarProps> = ({
 
       {/* Right controls */}
       <div className="flex items-center space-x-2.5">
+        {/* SIH26121 Problem Statement Walkthrough Button */}
+        <button
+          onClick={() => setIsStoryOpen(true)}
+          className="flex items-center space-x-1.5 bg-gradient-to-r from-amber-500/20 via-cyan-500/20 to-blue-500/20 hover:from-amber-500/30 hover:to-cyan-500/30 text-amber-300 hover:text-white px-2.5 py-1.5 rounded-lg border border-amber-500/60 shadow-[0_0_12px_rgba(245,158,11,0.3)] text-xs font-mono font-bold transition-all animate-pulse"
+          title="Launch SIH26121 Problem Statement Walkthrough & Evaluation Storyline"
+        >
+          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <span className="hidden sm:inline">SIH26121 Tour</span>
+        </button>
+
         {/* Quick Launch: 3D Green Globe */}
         <button
           onClick={() => onNavigate('globe')}
@@ -227,6 +239,13 @@ export const Topbar: React.FC<TopbarProps> = ({
           )}
         </div>
       </div>
+
+      {/* SIH Story Modal */}
+      <SIHStoryModal
+        isOpen={isStoryOpen}
+        onClose={() => setIsStoryOpen(false)}
+        onNavigate={onNavigate}
+      />
     </header>
   );
 };
