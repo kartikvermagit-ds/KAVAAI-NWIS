@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   Layers, ArrowRight, Shield, AlertTriangle, Eye,
-  Info, CheckCircle2, ChevronRight
+  Info, CheckCircle2, ChevronRight, Play, Pause,
+  RotateCcw, Activity, Globe, Sliders, ArrowDown, Cpu
 } from 'lucide-react';
 import { Well, Formation, DrillingEvent } from '../../types';
 import { api } from '../../api/client';
@@ -17,6 +18,11 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
   const [nearbyWells, setNearbyWells] = useState<Well[]>([]);
   const [selectedFormationId, setSelectedFormationId] = useState<string>('FMT-04'); // Barail Sandstone / XYZ
 
+  // Interactive Live Penetration Simulation State
+  const initialDepth = activeWell?.current_depth || 3420;
+  const [simulatedDepth, setSimulatedDepth] = useState<number>(initialDepth);
+  const [isAutoDrilling, setIsAutoDrilling] = useState<boolean>(false);
+
   useEffect(() => {
     Promise.all([
       api.getFormations(),
@@ -29,10 +35,24 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
     }).catch(console.error);
   }, []);
 
-  const currentDepth = activeWell?.current_depth || 3420;
+  // Continuous micro-advance when auto-drilling is enabled
+  useEffect(() => {
+    if (!isAutoDrilling) return;
+    const interval = setInterval(() => {
+      setSimulatedDepth((prev) => {
+        if (prev >= 3465) {
+          setIsAutoDrilling(false);
+          return 3465;
+        }
+        return +(prev + 0.4).toFixed(1);
+      });
+    }, 350);
+    return () => clearInterval(interval);
+  }, [isAutoDrilling]);
+
   const currentFmtName = activeWell?.formation || 'Barail Sandstone / XYZ Formation';
 
-  // Key offset comparison wells matching Section 7 and 10
+  // Key offset comparison wells with dynamically calculated deltaMeters
   const comparisonOffsetWells = [
     {
       id: 'WELL-B-03',
@@ -44,7 +64,6 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
       severity: 'HIGH',
       similarity: 91,
       docId: 'DOC-DDR-2024-017',
-      deltaMeters: 20
     },
     {
       id: 'WELL-C-07',
@@ -56,7 +75,6 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
       severity: 'MEDIUM',
       similarity: 87,
       docId: 'DOC-DDR-2023-112',
-      deltaMeters: -30
     },
     {
       id: 'WELL-E-11',
@@ -68,7 +86,6 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
       severity: 'HIGH',
       similarity: 90,
       docId: 'DOC-DDR-2024-045',
-      deltaMeters: 40
     },
     {
       id: 'WELL-D-02',
@@ -80,9 +97,13 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
       severity: 'CRITICAL',
       similarity: 64,
       docId: 'DOC-WCR-2022-088',
-      deltaMeters: 190
     }
   ];
+
+  // Critical hazard delta to WELL-B-03 (3,440 m)
+  const deltaToB03 = +(3440 - simulatedDepth).toFixed(1);
+  const isImminentHazard = Math.abs(deltaToB03) <= 5;
+  const isLossActive = deltaToB03 <= 0 && deltaToB03 >= -15;
 
   return (
     <div className="flex-1 p-6 space-y-6 overflow-y-auto max-w-[1600px] mx-auto">
@@ -102,8 +123,23 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
 
         <div className="flex items-center space-x-2">
           <button
+            onClick={() => onNavigate('globe')}
+            className="flex items-center space-x-1.5 bg-[#032014] hover:bg-[#063321] text-emerald-300 hover:text-white px-3 py-2 rounded-lg text-xs font-mono font-bold border border-emerald-700/60 shadow-[0_0_10px_rgba(16,185,129,0.2)] transition-all"
+            title="Inspect basin in 3D Green Tactical Globe"
+          >
+            <Globe className="w-3.5 h-3.5 text-emerald-400 animate-spin" style={{ animationDuration: '20s' }} />
+            <span>3D Green Globe</span>
+          </button>
+          <button
+            onClick={() => onNavigate('simulation')}
+            className="flex items-center space-x-1.5 bg-[#0d233e] hover:bg-[#14345d] text-cyan-300 hover:text-white px-3 py-2 rounded-lg text-xs font-mono font-bold border border-cyan-700/60 shadow-[0_0_10px_rgba(6,182,212,0.2)] transition-all"
+          >
+            <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Live Rig Sim</span>
+          </button>
+          <button
             onClick={() => onNavigate('risks')}
-            className="flex items-center space-x-1.5 bg-red-600 hover:bg-red-500 text-white px-3.5 py-2 rounded-lg text-xs font-semibold shadow transition-colors"
+            className="flex items-center space-x-1.5 bg-red-600 hover:bg-red-500 text-white px-3.5 py-2 rounded-lg text-xs font-semibold shadow transition-colors font-mono"
           >
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>Generate Risk Interval Alert</span>
@@ -111,8 +147,105 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
         </div>
       </div>
 
+      {/* Interactive Drill-Ahead Depth Penetration Simulator Deck */}
+      <div className={`p-4 rounded-xl border transition-all ${
+        isLossActive
+          ? 'bg-red-950/70 border-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-pulse'
+          : isImminentHazard
+          ? 'bg-amber-950/70 border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.25)]'
+          : 'bg-[#091b30] border-[#18395f]'
+      }`}>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div className="flex items-center space-x-3">
+            <div className={`w-8 h-8 rounded-lg flex items-center justify-center border ${
+              isLossActive ? 'bg-red-900 border-red-400 text-white' : 'bg-emerald-950 border-emerald-600 text-emerald-400'
+            }`}>
+              <Activity className="w-4 h-4 animate-spin" style={{ animationDuration: '4s' }} />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+                  Interactive Drill-Ahead Penetration Simulator
+                </span>
+                <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
+                  isLossActive
+                    ? 'bg-red-500 text-slate-950'
+                    : isImminentHazard
+                    ? 'bg-amber-500 text-slate-950'
+                    : 'bg-emerald-950 text-emerald-400 border border-emerald-800'
+                }`}>
+                  {isLossActive ? 'HAZARD ZONE ENTERED (3,440 m)!' : isImminentHazard ? 'IMMINENT PROXIMITY!' : 'NOMINAL FEED'}
+                </span>
+              </div>
+              <div className="text-xs text-slate-300 font-mono mt-0.5">
+                Simulated Depth: <strong className="text-emerald-400 text-sm">{simulatedDepth.toFixed(1)} m</strong> • Delta to WELL-B-03 Mud Loss: <strong className={deltaToB03 <= 5 ? 'text-red-400' : 'text-amber-300'}>{deltaToB03 > 0 ? `+${deltaToB03} m ahead` : `${Math.abs(deltaToB03)} m past`}</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* Controls */}
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={() => setIsAutoDrilling(!isAutoDrilling)}
+              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                isAutoDrilling
+                  ? 'bg-amber-600 hover:bg-amber-500 text-slate-950'
+                  : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+              }`}
+            >
+              {isAutoDrilling ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+              <span>{isAutoDrilling ? 'Pause Auto-Drill' : 'Auto Drill Feed'}</span>
+            </button>
+
+            <button
+              onClick={() => setSimulatedDepth((d) => +(d + 1).toFixed(1))}
+              className="px-2.5 py-1.5 rounded-lg bg-[#0e2746] hover:bg-[#153863] text-slate-200 border border-[#1e4675] text-xs font-mono font-semibold"
+            >
+              +1 m
+            </button>
+            <button
+              onClick={() => setSimulatedDepth((d) => +(d + 5).toFixed(1))}
+              className="px-2.5 py-1.5 rounded-lg bg-[#0e2746] hover:bg-[#153863] text-slate-200 border border-[#1e4675] text-xs font-mono font-semibold"
+            >
+              +5 m
+            </button>
+            <button
+              onClick={() => setSimulatedDepth(3439.5)}
+              className="px-2.5 py-1.5 rounded-lg bg-amber-950 hover:bg-amber-900 text-amber-300 border border-amber-600 text-xs font-mono font-bold"
+            >
+              Simulate 3,439.5 m (Hazard Lip)
+            </button>
+            <button
+              onClick={() => {
+                setSimulatedDepth(initialDepth);
+                setIsAutoDrilling(false);
+              }}
+              className="p-1.5 rounded-lg bg-[#0e2746] hover:bg-[#153863] text-slate-400 hover:text-white border border-[#1e4675]"
+              title="Reset to 3,420 m"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Depth Range Slider */}
+        <div className="mt-3 pt-3 border-t border-slate-800/80 flex items-center space-x-3 text-xs font-mono">
+          <span className="text-slate-400">3,410 m</span>
+          <input
+            type="range"
+            min={3410}
+            max={3465}
+            step={0.5}
+            value={simulatedDepth}
+            onChange={(e) => setSimulatedDepth(parseFloat(e.target.value))}
+            className="flex-1 accent-emerald-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg"
+          />
+          <span className="text-slate-400">3,465 m</span>
+        </div>
+      </div>
+
       {/* Synthetic Dataset Badge */}
-      <div className="bg-slate-900/80 border border-slate-700/70 rounded-lg px-4 py-2.5 flex items-center justify-between text-xs text-slate-300">
+      <div className="bg-slate-900/80 border border-slate-700/70 rounded-lg px-4 py-2 flex items-center justify-between text-xs text-slate-300">
         <div className="flex items-center space-x-2">
           <Shield className="w-4 h-4 text-blue-400" />
           <span className="font-mono text-slate-200 font-semibold">Transparent Stratigraphic Correlation Engine</span>
@@ -140,9 +273,9 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
 
           <div className="space-y-3 font-mono text-xs">
             <div className="bg-[#0c182b] p-3 rounded-lg border border-[#172b47]">
-              <span className="text-slate-400 text-[10px] block">CURRENT DEPTH</span>
-              <span className="text-2xl font-bold text-emerald-400">{currentDepth} m</span>
-              <span className="text-slate-400 text-[10px] block mt-0.5">Bit Position in Formation</span>
+              <span className="text-slate-400 text-[10px] block">SIMULATED BIT DEPTH</span>
+              <span className="text-2xl font-bold text-emerald-400">{simulatedDepth.toFixed(1)} m</span>
+              <span className="text-slate-400 text-[10px] block mt-0.5">Continuous MWD Position</span>
             </div>
 
             <div className="bg-[#0c182b] p-3 rounded-lg border border-[#172b47]">
@@ -151,18 +284,32 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
               <span className="text-slate-400 text-[10px] block mt-1">Depth Window: 2,950m – 3,650m</span>
             </div>
 
-            <div className="bg-[#0c182b] p-3 rounded-lg border border-[#172b47]">
+            <div className={`p-3 rounded-lg border transition-all ${
+              isLossActive
+                ? 'bg-red-950/60 border-red-500 text-red-300'
+                : 'bg-[#0c182b] border-[#172b47]'
+            }`}>
               <span className="text-slate-400 text-[10px] block">CRITICAL DEPTH TO WATCH</span>
-              <span className="text-red-400 font-bold text-sm block mt-0.5">3,440 m (+20 m ahead)</span>
+              <span className={`font-bold text-sm block mt-0.5 ${isLossActive ? 'text-red-400 animate-pulse' : 'text-red-400'}`}>
+                3,440 m ({deltaToB03 > 0 ? `+${deltaToB03} m ahead` : `${Math.abs(deltaToB03)} m past`})
+              </span>
               <span className="text-slate-400 text-[10px] block mt-0.5">Predicted severe loss interval</span>
             </div>
           </div>
 
           <div className="pt-2">
-            <div className="bg-amber-950/40 border border-amber-800/60 p-3 rounded-lg text-xs text-amber-200 space-y-1">
-              <strong className="block font-mono">Engine Warning:</strong>
+            <div className={`p-3 rounded-lg text-xs space-y-1 border ${
+              isLossActive
+                ? 'bg-red-950 border-red-600 text-red-200'
+                : 'bg-amber-950/40 border-amber-800/60 text-amber-200'
+            }`}>
+              <strong className="block font-mono">
+                {isLossActive ? 'CRITICAL ALERT TRIGGERED:' : 'Engine Warning:'}
+              </strong>
               <p className="text-[11px] leading-snug">
-                Bit is only 20 meters above the fractured sand interval that caused total loss in WELL-B-03.
+                {isLossActive
+                  ? 'Bit has penetrated into fractured thief sandstone! Correlated 48 bbl/hr mud loss profile from WELL-B-03 is now active.'
+                  : `Bit is ${deltaToB03 > 0 ? deltaToB03 : 0} meters away from the fractured sand interval that caused total loss in WELL-B-03.`}
               </p>
             </div>
           </div>
@@ -186,12 +333,17 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {comparisonOffsetWells.map((ow) => {
+              const delta = +(ow.eventDepth - simulatedDepth).toFixed(1);
+              const isEventActive = Math.abs(delta) <= 5;
               const isHigh = ow.severity === 'HIGH' || ow.severity === 'CRITICAL';
+
               return (
                 <div
                   key={ow.id}
                   className={`p-4 rounded-xl border transition-all ${
-                    isHigh
+                    isEventActive
+                      ? 'bg-red-950/60 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.3)] animate-pulse'
+                      : isHigh
                       ? 'bg-[#0f192b] border-red-800/40 hover:border-red-600/60'
                       : 'bg-[#0c182b] border-[#172b47] hover:border-slate-600'
                   }`}
@@ -203,6 +355,11 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
                         <span className="text-[10px] font-mono bg-blue-950 text-blue-300 px-1.5 py-0.5 rounded border border-blue-800">
                           {ow.distance_km} km away
                         </span>
+                        {isEventActive && (
+                          <span className="text-[10px] font-mono bg-red-600 text-white font-bold px-1.5 py-0.5 rounded">
+                            EVENT DEPTH!
+                          </span>
+                        )}
                       </div>
                       <p className="text-[11px] text-slate-400 mt-0.5">{ow.name}</p>
                     </div>
@@ -220,8 +377,8 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
                     </div>
                     <div className="flex justify-between py-1 border-b border-slate-800">
                       <span className="text-slate-400">Delta vs Bit:</span>
-                      <span className={`font-bold ${ow.deltaMeters > 0 ? 'text-amber-400' : 'text-slate-300'}`}>
-                        {ow.deltaMeters > 0 ? `+${ow.deltaMeters} m ahead` : `${ow.deltaMeters} m past`}
+                      <span className={`font-bold ${Math.abs(delta) <= 5 ? 'text-red-400' : delta > 0 ? 'text-amber-400' : 'text-slate-300'}`}>
+                        {delta > 0 ? `+${delta} m ahead` : `${Math.abs(delta)} m past`}
                       </span>
                     </div>
                     <div className="flex justify-between py-1 border-b border-slate-800">
@@ -288,7 +445,7 @@ export const FormationCorrelation: React.FC<FormationCorrelationProps> = ({ acti
                     </span>
                     {isTargetFmt && (
                       <span className="bg-emerald-500 text-slate-950 font-mono font-bold text-[10px] px-2 py-0.5 rounded">
-                        CURRENT BIT AT {currentDepth}M
+                        SIMULATED BIT AT {simulatedDepth.toFixed(1)}M
                       </span>
                     )}
                   </div>

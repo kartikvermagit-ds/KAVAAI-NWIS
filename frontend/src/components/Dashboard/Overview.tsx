@@ -1,8 +1,7 @@
-import React from 'react';
 import {
   Activity, AlertTriangle, ArrowRight, BookOpen, Compass,
   Database, Eye, FileText, Layers, MapPin, Sparkles, TrendingUp,
-  Shield, HelpCircle, HardHat, ExternalLink
+  Shield, HelpCircle, HardHat, ExternalLink, Globe, Cpu
 } from 'lucide-react';
 import { DashboardSummary, Well } from '../../types';
 import { BrandLogo } from '../Common/BrandLogo';
@@ -95,7 +94,7 @@ export const Overview: React.FC<OverviewProps> = ({ summary, loading, onNavigate
   return (
     <div className="flex-1 p-6 space-y-6 overflow-y-auto max-w-[1600px] mx-auto relative">
       {/* 3D Green Rotating Half-Globe Telemetry Backdrop */}
-      <RotatingGlobeBackdrop />
+      <RotatingGlobeBackdrop onOpenGlobe={() => onNavigate('globe')} />
 
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-[#182944] gap-4 relative z-10">
@@ -104,6 +103,22 @@ export const Overview: React.FC<OverviewProps> = ({ summary, loading, onNavigate
         </div>
 
         <div className="flex items-center space-x-2">
+          <button
+            onClick={() => onNavigate('globe')}
+            className="flex items-center space-x-1.5 bg-[#032014] hover:bg-[#053220] text-emerald-300 hover:text-white px-3.5 py-2 rounded-lg text-xs font-bold border border-emerald-600/70 shadow-[0_0_12px_rgba(16,185,129,0.3)] transition-all font-mono"
+            title="Open Interactive 3D Green Planetary Earth Twin"
+          >
+            <Globe className="w-3.5 h-3.5 text-emerald-400" />
+            <span>3D Green Globe</span>
+          </button>
+          <button
+            onClick={() => onNavigate('simulation')}
+            className="flex items-center space-x-1.5 bg-[#0c223c] hover:bg-[#14345d] text-cyan-300 hover:text-white px-3.5 py-2 rounded-lg text-xs font-bold border border-cyan-600/70 shadow-[0_0_12px_rgba(6,182,212,0.3)] transition-all font-mono"
+            title="Launch Real-time Rig Telemetry & Hazard Simulation Studio"
+          >
+            <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Live Simulation</span>
+          </button>
           <button
             onClick={() => onNavigate('map')}
             className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2 rounded-lg text-xs font-semibold shadow-md transition-all font-mono"

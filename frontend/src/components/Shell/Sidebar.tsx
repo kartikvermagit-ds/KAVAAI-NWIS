@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   LayoutDashboard, Map, Compass, FileText, Layers,
-  AlertTriangle, Bot, BellRing, Database, Activity, ChevronRight
+  AlertTriangle, Bot, BellRing, Database, Activity, ChevronRight,
+  Globe, Cpu
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -13,6 +14,8 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ currentView, onSelectView, alertCount }) => {
   const menuItems = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+    { id: 'globe', label: '3D Green Globe', icon: Globe, badge: 'Digital Twin', highlight: 'emerald' },
+    { id: 'simulation', label: 'Live Simulation', icon: Cpu, badge: 'Realtime', highlight: 'cyan' },
     { id: 'map', label: 'Well Map', icon: Map, badge: 'Live GIS' },
     { id: 'explorer', label: 'Well Explorer', icon: Compass },
     { id: 'reports', label: 'Historical Reports', icon: FileText, badge: 'WCR/DDR' },
@@ -40,29 +43,62 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onSelectView, ale
       </div>
 
       {/* Nav List */}
-      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-3 py-3 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = currentView === item.id;
+          const isEmerald = item.highlight === 'emerald';
+          const isCyan = item.highlight === 'cyan';
+
           return (
             <button
               key={item.id}
               onClick={() => onSelectView(item.id)}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all group ${
+              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all group ${
                 isActive
-                  ? 'bg-blue-600/20 text-blue-400 border border-blue-500/40 shadow-sm'
+                  ? isEmerald
+                    ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.2)]'
+                    : isCyan
+                    ? 'bg-cyan-600/20 text-cyan-400 border border-cyan-500/50 shadow-[0_0_12px_rgba(6,182,212,0.2)]'
+                    : 'bg-blue-600/20 text-blue-400 border border-blue-500/40 shadow-sm'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-[#0c1829]'
               }`}
             >
               <div className="flex items-center space-x-3">
-                <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-blue-400' : 'text-slate-400 group-hover:text-slate-200'}`} />
-                <span>{item.label}</span>
+                <Icon
+                  className={`w-4 h-4 transition-colors ${
+                    isActive
+                      ? isEmerald
+                        ? 'text-emerald-400'
+                        : isCyan
+                        ? 'text-cyan-400'
+                        : 'text-blue-400'
+                      : isEmerald
+                      ? 'text-emerald-500 group-hover:text-emerald-300'
+                      : isCyan
+                      ? 'text-cyan-500 group-hover:text-cyan-300'
+                      : 'text-slate-400 group-hover:text-slate-200'
+                  }`}
+                />
+                <span className={isEmerald && !isActive ? 'text-emerald-200/90' : isCyan && !isActive ? 'text-cyan-200/90' : ''}>
+                  {item.label}
+                </span>
               </div>
 
               <div className="flex items-center space-x-1.5">
                 {item.badge && (
-                  <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
-                    isActive ? 'bg-blue-500/30 text-blue-200' : 'bg-slate-800 text-slate-400'
+                  <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-bold ${
+                    isActive
+                      ? isEmerald
+                        ? 'bg-emerald-500/30 text-emerald-200'
+                        : isCyan
+                        ? 'bg-cyan-500/30 text-cyan-200'
+                        : 'bg-blue-500/30 text-blue-200'
+                      : isEmerald
+                      ? 'bg-emerald-950 text-emerald-400 border border-emerald-800/80'
+                      : isCyan
+                      ? 'bg-cyan-950 text-cyan-400 border border-cyan-800/80'
+                      : 'bg-slate-800 text-slate-400'
                   }`}>
                     {item.badge}
                   </span>
@@ -72,7 +108,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onSelectView, ale
                     {item.count}
                   </span>
                 )}
-                <ChevronRight className={`w-3 h-3 transition-transform ${isActive ? 'text-blue-400 translate-x-0.5' : 'text-slate-600 opacity-0 group-hover:opacity-100'}`} />
+                <ChevronRight className={`w-3 h-3 transition-transform ${
+                  isActive ? 'text-blue-400 translate-x-0.5' : 'text-slate-600 opacity-0 group-hover:opacity-100'
+                }`} />
               </div>
             </button>
           );

@@ -13,6 +13,8 @@ import { KnowledgeBase } from './components/KnowledgeBase/KnowledgeBase';
 import { SystemStatus } from './components/SystemStatus/SystemStatus';
 import { LoginPage } from './components/Auth/LoginPage';
 import { HomePage } from './components/Home/HomePage';
+import { GreenGlobeView } from './components/GreenGlobe/GreenGlobeView';
+import { LiveSimulation } from './components/LiveSimulation/LiveSimulation';
 
 import { api } from './api/client';
 import { Well, DashboardSummary, Alert } from './types';
@@ -161,6 +163,20 @@ export function App() {
             <Overview
               summary={summary}
               loading={loading}
+              onNavigate={handleNavigate}
+            />
+          )}
+
+          {currentView === 'globe' && (
+            <GreenGlobeView
+              activeWell={activeWell}
+              onNavigate={handleNavigate}
+            />
+          )}
+
+          {currentView === 'simulation' && (
+            <LiveSimulation
+              activeWell={activeWell}
               onNavigate={handleNavigate}
             />
           )}
