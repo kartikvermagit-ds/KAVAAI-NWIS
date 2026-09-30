@@ -15,15 +15,64 @@ interface WellMapProps {
 }
 
 // Map recentering helper component
-const MapRecenterController: React.FC<{ center: [number, number]; zoom: number; trigger: number }> = ({
-  center,
-  zoom,
-  trigger
-}) => {
+const MapRecenterController: React.FC<{
+  center: [number, number];
+  zoom: number;
+  trigger: number;
+  wells: Well[];
+  flyTarget?: { center: [number, number]; zoom: number; id: number } | null;
+}> = ({ center, zoom, trigger, wells, flyTarget }) => {
   const map = useMap();
+
   React.useEffect(() => {
-    map.flyTo(center, zoom, { duration: 1.2 });
+    // Force Leaflet to recalculate container bounds and zoom into the actual field location
+    map.invalidateSize();
+    map.setView(center, zoom, { animate: false });
+
+    const timers = [
+      setTimeout(() => {
+        map.invalidateSize();
+        map.setView(center, zoom, { animate: true });
+      }, 60),
+      setTimeout(() => {
+        map.invalidateSize();
+        if (wells && wells.length > 0) {
+          const bounds = L.latLngBounds(wells.map((w) => [w.latitude, w.longitude]));
+          map.fitBounds(bounds.pad(0.18), { maxZoom: 13, animate: true });
+        } else {
+          map.setView(center, zoom, { animate: true });
+        }
+      }, 250),
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 600)
+    ];
+
+    const handleResize = () => {
+      map.invalidateSize();
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      timers.forEach(clearTimeout);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [map, center[0], center[1], zoom, wells.length]);
+
+  React.useEffect(() => {
+    if (trigger > 0) {
+      map.invalidateSize();
+      map.flyTo(center, zoom, { duration: 1.0 });
+    }
   }, [trigger, center, zoom, map]);
+
+  React.useEffect(() => {
+    if (flyTarget) {
+      map.invalidateSize();
+      map.flyTo(flyTarget.center, flyTarget.zoom, { duration: 1.0 });
+    }
+  }, [flyTarget, map]);
+
   return null;
 };
 
@@ -147,8 +196,22 @@ export const WellMap: React.FC<WellMapProps> = ({ wells, activeWell, onNavigate 
     };
   }, [mapStyle]);
 
+  const [flyTarget, setFlyTarget] = useState<{ center: [number, number]; zoom: number; id: number } | null>(null);
+
   const handleRecenter = () => {
     setRecenterCount((prev) => prev + 1);
+  };
+
+  const handleFocusTarget = () => {
+    setFlyTarget({ center: [centerLat, centerLon], zoom: 13.5, id: Date.now() });
+  };
+
+  const handleFitAllWells = () => {
+    setFlyTarget({ center: [centerLat, centerLon], zoom: 11.5, id: Date.now() });
+  };
+
+  const handleFocusDangerZone = () => {
+    setFlyTarget({ center: [27.510, 95.362], zoom: 14, id: Date.now() });
   };
 
   return (
@@ -294,16 +357,57 @@ export const WellMap: React.FC<WellMapProps> = ({ wells, activeWell, onNavigate 
       <div className="flex-1 relative flex overflow-hidden">
         {/* Leaflet Map Container */}
         <div className="flex-1 h-full w-full relative">
+          {/* Tactical Geospatial Location HUD Overlay */}
+          <div className="absolute top-4 left-4 z-[400] flex flex-col space-y-1 bg-[#051120]/95 backdrop-blur-md px-3.5 py-2.5 rounded-xl border border-cyan-500/60 shadow-[0_0_20px_rgba(6,182,212,0.3)] font-mono pointer-events-auto">
+            <div className="flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span className="text-xs font-bold text-white tracking-wide">
+                UPPER ASSAM DRILLING BASIN // BLOCK-4
+              </span>
+              <span className="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-700">
+                ACTIVE FIELD
+              </span>
+            </div>
+            <div className="text-[11px] text-slate-300">
+              Datum: WGS-84 • Field Center: <span className="text-emerald-400 font-bold">{centerLat.toFixed(4)}° N, {centerLon.toFixed(4)}° E</span>
+            </div>
+            <div className="flex items-center space-x-1.5 pt-1 text-[10px]">
+              <button
+                onClick={handleFocusTarget}
+                className="px-2.5 py-1 rounded bg-emerald-950 hover:bg-emerald-900 text-emerald-200 border border-emerald-600/70 font-semibold transition-all shadow-sm"
+                title="Zoom directly to WELL-A-01"
+              >
+                🎯 Target (WELL-A-01)
+              </button>
+              <button
+                onClick={handleFitAllWells}
+                className="px-2.5 py-1 rounded bg-[#0b2444] hover:bg-[#133766] text-cyan-200 border border-cyan-600/70 font-semibold transition-all shadow-sm"
+                title="Fit full 15 km drilling basin"
+              >
+                📍 15km Field Basin
+              </button>
+              <button
+                onClick={handleFocusDangerZone}
+                className="px-2.5 py-1 rounded bg-red-950 hover:bg-red-900 text-red-200 border border-red-600/70 font-semibold transition-all shadow-sm"
+                title="Zoom to 3 km offset incident hazard corridor"
+              >
+                ⚠️ 3km Hazard Ring
+              </button>
+            </div>
+          </div>
+
           <MapContainer
             center={[centerLat, centerLon]}
-            zoom={12}
+            zoom={12.5}
             scrollWheelZoom={true}
             style={{ height: '100%', width: '100%', backgroundColor: '#040b15' }}
           >
             <MapRecenterController
               center={[centerLat, centerLon]}
-              zoom={12}
+              zoom={12.5}
               trigger={recenterCount}
+              wells={wells}
+              flyTarget={flyTarget}
             />
 
             {/* Custom Dynamic Basemap Layer (Zero watermarks, high contrast) */}
@@ -314,7 +418,7 @@ export const WellMap: React.FC<WellMapProps> = ({ wells, activeWell, onNavigate 
             />
 
             {/* Distance buffer circles centered on active well with distinct industrial styling */}
-            {showCircles && activeWell && (
+            {showCircles && (
               <>
                 {/* 3 km Immediate Offset Zone */}
                 <Circle
